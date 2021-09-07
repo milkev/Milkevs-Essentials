@@ -1,0 +1,98 @@
+plugins {
+	id 'fabric-loom' version '0.9-SNAPSHOT'
+	id 'maven-publish'
+}
+
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
+
+dependencies {
+	//to change the versions see the gradle.properties file
+	//minecraft version
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	//yarn mappings
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	//fabric loader
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	//fabric api
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	//this mod allows extendo grips to increase block reach and range
+	include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}")
+	//trinkets, to equip trinkets
+	modImplementation "dev.emi:trinkets:${trinkets_version}"
+	//cardinal components api bcus trinkets???
+	modImplementation "dev.whomst:cardinal-components-base:${cardinal_components_version}"
+	modImplementation "dev.whomst:cardinal-components-entity:${cardinal_components_version}"
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	from(sourceSets.main.resources.srcDirs) {
+		include "fabric.mod.json"
+		expand "version": project.version
+	}
+
+	from(sourceSets.main.resources.srcDirs) {
+		exclude "fabric.mod.json"
+	}
+}
+
+// ensure that the encoding is set to UTF-8, no matter what the system default is
+// this fixes some edge cases with special characters not displaying correctly
+// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+}
+
+//fixes problem i had with intellij and gradle
+tasks {
+	processResources {
+		setDuplicatesStrategy('include')
+	}
+}
+
+// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+// if it is present.
+// If you remove this task, sources will not be generated.
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = "sources"
+	from sourceSets.main.allSource
+}
+
+jar {
+	from "LICENSE"
+}
+
+// configure the maven publication
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			// add all the jars that should be included when publishing to maven
+			artifact(remapJar) {
+				builtBy remapJar
+			}
+			artifact(sourcesJar) {
+				builtBy remapSourcesJar
+			}
+		}
+	}
+
+	// select the repositories you want to publish to
+	repositories {
+		mavenCentral()
+		//reach entity attributes
+		maven {	url "https://maven.jamieswhiteshirt.com/libs-release"}
+		//mod menu
+		//maven {	url = "https://maven.terraformersmc.com/"}
+		//trinkets cardinal components
+		maven {
+			name = "LadysnakeLibs"
+			url = "https://ladysnake.jfrog.io/artifactory/mods"
+		}
+	}
+}

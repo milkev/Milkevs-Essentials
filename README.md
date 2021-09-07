@@ -1,4 +1,6 @@
-# More Baked Foods
+# Milkevs Essentials
 Fabric Branch
 
-[Check us out on Curseforge!](https://www.curseforge.com/minecraft/mc-mods/more-baked-foods)
+Link does not work yet
+
+[Check us out on Curseforge!](https://www.curseforge.com/minecraft/mc-mods/milkevs-essentials)

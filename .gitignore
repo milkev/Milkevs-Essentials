@@ -4,3 +4,5 @@
 /.gradle/
 /run/
 *.psd
+src/main/java/net/milkev/milkevsessentials/common/mixins/ExtendoGripMixin.java
+src/main/resources/MilkevEssentials.Mixin.json

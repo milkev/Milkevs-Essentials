@@ -27,6 +27,10 @@ dependencies {
 	//cardinal components api bcus trinkets???
 	modImplementation "dev.whomst:cardinal-components-base:${cardinal_components_version}"
 	modImplementation "dev.whomst:cardinal-components-entity:${cardinal_components_version}"
+	//config api
+	modApi("me.shedaniel.cloth:cloth-config:${cloth_config_version}-fabric") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
 }
 
 processResources {
@@ -68,6 +72,20 @@ jar {
 	from "LICENSE"
 }
 
+repositories {
+	mavenCentral()
+	//reach entity attributes
+	maven {	url "https://maven.jamieswhiteshirt.com/libs-release"}
+	//mod menu
+	//maven {	url = "https://maven.terraformersmc.com/"}
+	//trinkets cardinal components
+	maven {
+		name = "LadysnakeLibs"
+		url = "https://ladysnake.jfrog.io/artifactory/mods"
+	}
+	maven { url "https://maven.shedaniel.me/" }
+}
+
 // configure the maven publication
 publishing {
 	publications {
@@ -83,16 +101,4 @@ publishing {
 	}
 
 	// select the repositories you want to publish to
-	repositories {
-		mavenCentral()
-		//reach entity attributes
-		maven {	url "https://maven.jamieswhiteshirt.com/libs-release"}
-		//mod menu
-		//maven {	url = "https://maven.terraformersmc.com/"}
-		//trinkets cardinal components
-		maven {
-			name = "LadysnakeLibs"
-			url = "https://ladysnake.jfrog.io/artifactory/mods"
-		}
-	}
 }

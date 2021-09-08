@@ -1,3 +1,7 @@
 {
-  "item.modid.item_name": "Item Name"
+  "item.milkevsessentials.extendo_grip_low": "Basic Extendo Grip",
+  "item.milkevsessentials.extendo_grip_normal": "Extendo Grip",
+  "item.milkevsessentials.extendo_grip_high": "Advanced Extendo Grip",
+  "item.milkevsessentials.flight_ring": "Flight Ring",
+  "trinkets.slot.chest.tool": "Tool"
 }

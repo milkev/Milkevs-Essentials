@@ -1,6 +1,5 @@
 package net.milkev.milkevsessentials.common;
 
-import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.milkev.milkevsessentials.common.trinkets.ExtendoGrip;
@@ -8,7 +7,6 @@ import net.milkev.milkevsessentials.common.trinkets.FlightRing;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.lwjgl.system.CallbackI;
 
 public class MilkevsEssentials implements ModInitializer {
 

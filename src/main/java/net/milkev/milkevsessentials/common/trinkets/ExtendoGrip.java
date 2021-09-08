@@ -24,11 +24,6 @@ public class ExtendoGrip extends TrinketItem {
         attack_reach = attack_reach_set;
     }
 
-    @Override
-    public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
-        super.tick(stack, slot, entity);
-    }
-
     public Multimap<EntityAttribute, EntityAttributeModifier>
             getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid) {
 

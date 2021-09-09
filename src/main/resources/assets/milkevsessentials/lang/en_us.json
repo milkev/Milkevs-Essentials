@@ -2,6 +2,10 @@
   "item.milkevsessentials.extendo_grip_low": "Basic Extendo Grip",
   "item.milkevsessentials.extendo_grip_normal": "Extendo Grip",
   "item.milkevsessentials.extendo_grip_high": "Advanced Extendo Grip",
-  "item.milkevsessentials.flight_ring": "Flight Ring",
-  "trinkets.slot.chest.tool": "Tool"
+  "item.milkevsessentials.flight_charm": "Flight Charm",
+  "item.milkevsessentials.flight_charm.equip_in_slot": "§7Equippable in the §9Charm §7trinket slot",
+  "item.milkevsessentials.flight_charm.when_equip": "§7When equipped:",
+  "item.milkevsessentials.flight_charm.allows_flight": "§9+Creative Flight",
+  "trinkets.slot.chest.tool": "Tool",
+  "trinkets.slot.offhand.charm": "Charm"
 }

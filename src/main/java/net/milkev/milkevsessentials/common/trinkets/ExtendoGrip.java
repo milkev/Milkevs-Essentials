@@ -15,8 +15,6 @@ import java.util.UUID;
 public class ExtendoGrip extends TrinketItem {
     private int reach;
     private int attack_reach;
-    //private int durability;
-    //private int maxDurability;
     public ExtendoGrip(Settings settings, int reach_set, int attack_reach_set) {
         super(settings);
         TrinketsApi.registerTrinket(this, this);

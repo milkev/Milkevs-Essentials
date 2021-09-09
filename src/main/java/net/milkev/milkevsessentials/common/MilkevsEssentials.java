@@ -1,7 +1,6 @@
 package net.milkev.milkevsessentials.common;
 
 import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -15,11 +14,6 @@ public class MilkevsEssentials implements ModInitializer {
 
 
 	public static final String MOD_ID = "milkevsessentials";
-/*
-	public static final ExtendoGrip EXTENDO_GRIP_LOW = new ExtendoGrip(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS), 0);
-	public static final ExtendoGrip EXTENDO_GRIP_NORMAL = new ExtendoGrip(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS), 1);
-	public static final ExtendoGrip EXTENDO_GRIP_HIGH = new ExtendoGrip(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS), 2);
-*/
 	public static final FlightCharm FLIGHT_CHARM = new FlightCharm(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS));
 
 	@Override

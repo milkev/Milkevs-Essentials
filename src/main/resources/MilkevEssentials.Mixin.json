@@ -2,12 +2,11 @@
 {
   "required": true,
   "package": "net.milkev.milkevsessentials.common.mixins",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_16",
   "mixins": [
     "FlightCharmMixin"
   ],
   "client": [
-    "FlightCharmMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,4 +1,4 @@
-package net.milkev.milkevsessentials.common.trinkets;
+package net.milkev.milkevsessentials.common.items.trinkets;
 
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
@@ -44,7 +44,7 @@ public class FlightCharm extends TrinketItem {
 
         //trinkets wont auto put the 'equip in slot' on this charm, dunno why :/
         tooltip.add(new TranslatableText("item.milkevsessentials.flight_charm.equip_in_slot"));
-        //displays that the charm enables flight. is understandable that trinkets doesnt auto list this as it is not enabled directly through trinkets api
+        //displays that the charm enables flight
         tooltip.add(new TranslatableText("item.milkevsessentials.flight_charm.when_equip"));
         tooltip.add(new TranslatableText("item.milkevsessentials.flight_charm.allows_flight"));
     }

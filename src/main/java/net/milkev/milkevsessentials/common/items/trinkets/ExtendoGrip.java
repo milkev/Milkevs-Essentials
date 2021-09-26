@@ -1,14 +1,11 @@
-package net.milkev.milkevsessentials.common.trinkets;
+package net.milkev.milkevsessentials.common.items.trinkets;
 
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.emi.trinkets.api.*;
-import net.milkev.milkevsessentials.common.MilkevsEssentials;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import java.util.UUID;
 

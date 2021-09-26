@@ -31,7 +31,7 @@ public abstract class FlightCharmMixin {
             this.player.getAbilities().allowFlying = true;
             this.player.getAbilities().flying = true;
             this.player.sendAbilitiesUpdate();
-            this.player.server.getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_GAME_MODE, new ServerPlayerEntity[]{this.player}));
+            this.player.server.getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_GAME_MODE, this.player));
             this.world.updateSleepingPlayers();
         }
 

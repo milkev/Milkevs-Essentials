@@ -1,0 +1,6 @@
+{
+  "replace": false,
+  "values": [
+    {"id": "milkevsessentials:toolbelt", "required": false }
+  ]
+}

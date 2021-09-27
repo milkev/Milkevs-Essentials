@@ -104,7 +104,12 @@ public class AmethystLauncher extends RangedWeaponItem {
                 //if((remainingUseTicks-getMaxUseTime(itemStack)+20)%5==0)
                 //System.out.println("Charging: " + (remainingUseTicks-getMaxUseTime(itemStack)+20) + " ticks remaining");
                 if(remainingUseTicks <= getMaxUseTime(itemStack)-20) {
+
                     setCharged(itemStack, true);
+
+                    //consume ammo
+                    ItemStack ammo = getProjectiles((PlayerEntity) user);
+                    ammo.decrement(1);
                     //System.out.println("CHARGED!");
                     world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.MASTER, 100, 100);
                 }

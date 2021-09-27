@@ -3,6 +3,7 @@ package net.milkev.milkevsessentials.common.items.trinkets;
 import dev.emi.trinkets.api.TrinketItem;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -40,7 +41,7 @@ public class ToolBelt extends TrinketItem {
             */
 
         for(int i = 0; i < 9; i++) {
-            //init variable that is currently in the belt, and will be moved out of the belt at the end
+            //init variable holding itemstack that is currently in the belt, and will be moved out of the belt at the end
             ItemStack toHotbar = ItemStack.EMPTY;
             //grab identifier
             Identifier toolBeltItemID = makeIdentifier(toolBelt, i);
@@ -54,11 +55,12 @@ public class ToolBelt extends TrinketItem {
             }
             if (!toolBeltItemID.equals(new Identifier("minecraft", "air"))) {
                 //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": " + toolBeltItemID + ", COUNT: " + count);
+                toHotbar = new ItemStack(Registry.ITEM.get(toolBeltItemID), count);
                 if (toolBeltItemNbt != null) {
                     //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": NBT: " + toolBeltItemNbt);
+                    toHotbar.setNbt((NbtCompound) toolBeltItemNbt);
                 } else {
                     //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": NBT EMPTY");
-                    toHotbar = new ItemStack(Registry.ITEM.get(toolBeltItemID), count);
                 }
             } else {
                 //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": EMPTY");
@@ -78,7 +80,6 @@ public class ToolBelt extends TrinketItem {
                     //System.out.println("SETTING TOOLBELT NBT: ITEM HAS NO NBT DATA");
                     toolBeltNbt.remove("Slot_" + i + "_nbt");
                 }
-                //String itemName = itemStack.getName().asString();
                 toolBeltNbt.putString("Slot_" + i + "_identifier", String.valueOf(ID));
                 toolBeltNbt.putInt("Slot_" + i + "_count", itemStack.getCount());
                 //System.out.println("SETTING TOOLBELT ITEM, SLOT " + i + ": " + ID + ", COUNT: " + itemStack.getCount());

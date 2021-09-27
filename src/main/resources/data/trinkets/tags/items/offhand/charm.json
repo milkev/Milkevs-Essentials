@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "milkevsessentials:flight_charm"
+    {"id": "milkevsessentials:flight_charm", "required": false }
   ]
 }

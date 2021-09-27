@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "milkevsessentials:extendo_grip_low",
-    "milkevsessentials:extendo_grip_normal",
-    "milkevsessentials:extendo_grip_high"
+    {"id": "milkevsessentials:extendo_grip_low", "required": false },
+    {"id": "milkevsessentials:extendo_grip_normal", "required": false },
+    {"id": "milkevsessentials:extendo_grip_high", "required": false }
   ]
 }

@@ -1,0 +1,13 @@
+package net.milkev.milkevsessentials.common.registry;
+
+import net.fabricmc.fabric.api.tag.TagRegistry;
+import net.minecraft.item.Item;
+import net.minecraft.tag.Tag;
+import net.minecraft.util.Identifier;
+
+public class MilkevTagRegistry {
+
+    public static final String MOD_ID = "milkevsessentials";
+
+    public static final Tag<Item> AMETHYST_SHARD = TagRegistry.item(new Identifier(MOD_ID, "amethyst_shard"));
+}

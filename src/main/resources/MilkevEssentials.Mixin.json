@@ -4,7 +4,8 @@
   "package": "net.milkev.milkevsessentials.common.mixins",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "FlightCharmMixin"
+    "FlightCharmMixin",
+    "MilkevRecipeRegistryMixin"
   ],
   "client": [
   ],

@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.tag.TagFactory;
 import net.milkev.milkevsessentials.common.items.trinkets.ExtendoGrip;
 import net.milkev.milkevsessentials.common.items.trinkets.FlightCharm;
 import net.milkev.milkevsessentials.common.items.weapons.AmethystLauncher;
+import net.milkev.milkevsessentials.common.registry.MilkevRecipeRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.TagManager;
@@ -40,6 +41,8 @@ public class MilkevsEssentials implements ModInitializer {
 			TagFactory.ITEM.create(new Identifier(MOD_ID, "amethyst_shard"));
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "amethyst_launcher"), AMETHYST_LAUNCHER);
 		}
+
+		MilkevRecipeRegistry.init();
 
 		System.out.println(MOD_ID + " Initialized");
 	}

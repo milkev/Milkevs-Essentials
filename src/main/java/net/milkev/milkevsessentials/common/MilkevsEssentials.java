@@ -36,11 +36,11 @@ public class MilkevsEssentials implements ModInitializer {
 		}
 		if(config.enableFlightCharm) {
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "flight_charm"), FLIGHT_CHARM);
-		}
+		}/*
 		if(config.enableAmethystLauncher) {
 			TagFactory.ITEM.create(new Identifier(MOD_ID, "amethyst_shard"));
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "amethyst_launcher"), AMETHYST_LAUNCHER);
-		}
+		}*/
 
 		MilkevRecipeRegistry.init();
 

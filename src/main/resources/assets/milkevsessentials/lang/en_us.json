@@ -13,5 +13,7 @@
   "item.milkevsessentials.amethyst_launcher": "Amethyst Launcher",
   "trinkets.slot.chest.tool": "Tool",
   "trinkets.slot.offhand.charm": "Charm",
-  "trinkets.slot.legs.belt": "Belt"
+  "trinkets.slot.legs.belt": "Belt",
+  "category.milkevsessentials.keybind_category": "Milkevs Essentials",
+  "key.milkevsessentials.tool_belt": "Activate Toolbelt (swaps hotbars)"
 }

@@ -22,12 +22,15 @@ public class MilkevRecipeRegistryMixin {
         @Inject(method = "apply", at = @At("HEAD"))
         public void interceptApply(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo info) {
             if (MilkevRecipeRegistry.FLIGHT_CHARM != null) {
-                map.put(new Identifier(MilkevRecipeRegistry.FLIGHT_CHARM.getAsJsonObject("result").get("item").getAsString()), MilkevRecipeRegistry.FLIGHT_CHARM);
+                map.putIfAbsent(new Identifier(MilkevRecipeRegistry.FLIGHT_CHARM.getAsJsonObject("result").get("item").getAsString()), MilkevRecipeRegistry.FLIGHT_CHARM);
             }
             if (MilkevRecipeRegistry.EXTENDO_GRIP_HIGH != null && MilkevRecipeRegistry.EXTENDO_GRIP_NORMAL != null && MilkevRecipeRegistry.EXTENDO_GRIP_LOW != null) {
-                map.put(new Identifier(MOD_ID, "extendo_grip_high"), MilkevRecipeRegistry.EXTENDO_GRIP_HIGH);
-                map.put(new Identifier(MOD_ID, "extendo_grip_normal"), MilkevRecipeRegistry.EXTENDO_GRIP_NORMAL);
-                map.put(new Identifier(MOD_ID, "extendo_grip_low"), MilkevRecipeRegistry.EXTENDO_GRIP_LOW);
+                map.putIfAbsent(new Identifier(MOD_ID, "extendo_grip_high"), MilkevRecipeRegistry.EXTENDO_GRIP_HIGH);
+                map.putIfAbsent(new Identifier(MOD_ID, "extendo_grip_normal"), MilkevRecipeRegistry.EXTENDO_GRIP_NORMAL);
+                map.putIfAbsent(new Identifier(MOD_ID, "extendo_grip_low"), MilkevRecipeRegistry.EXTENDO_GRIP_LOW);
+            }
+            if(MilkevRecipeRegistry.TOOLBELT != null) {
+                map.putIfAbsent(new Identifier(MOD_ID, "toolbelt"), MilkevRecipeRegistry.TOOLBELT);
             }
         }
 

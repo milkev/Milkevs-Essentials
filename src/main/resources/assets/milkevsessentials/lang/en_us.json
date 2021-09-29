@@ -6,6 +6,12 @@
   "item.milkevsessentials.flight_charm.equip_in_slot": "§7Equippable in the §9Charm §7trinket slot",
   "item.milkevsessentials.flight_charm.when_equip": "§7When equipped:",
   "item.milkevsessentials.flight_charm.allows_flight": "§9+Creative Flight",
+  "item.milkevsessentials.toolbelt": "Tool Belt",
+  "item.milkevsessentials.toolbelt.equip_in_slot": "§7Equippable in the §9Belt §7trinket slot",
+  "item.milkevsessentials.toolbelt.when_equip": "§7When equipped:",
+  "item.milkevsessentials.toolbelt.allow": "§9+1 Hotbar <default keybind: g>",
+  "item.milkevsessentials.amethyst_launcher": "Amethyst Launcher",
   "trinkets.slot.chest.tool": "Tool",
-  "trinkets.slot.offhand.charm": "Charm"
+  "trinkets.slot.offhand.charm": "Charm",
+  "trinkets.slot.legs.belt": "Belt"
 }

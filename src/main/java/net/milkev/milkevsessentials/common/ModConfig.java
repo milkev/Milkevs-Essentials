@@ -10,8 +10,8 @@ public class ModConfig implements ConfigData {
     public boolean enableExtendoGrips = true;
     @Comment("If Flight Charm is enabled. Default: true")
     public boolean enableFlightCharm = true;
-    @Comment("If Amethyst Launcher is enabled. Default: true")
-    public boolean enableAmethystLauncher = true;
+    //@Comment("If Amethyst Launcher is enabled. This item is not yet implemented. Default: false")
+    //public boolean enableAmethystLauncher = false;
     @Comment("If Tool belt is enabled. Default: true")
     public boolean enableToolBelt = true;
     @Comment("Extendo Grips reach buffs\n" +

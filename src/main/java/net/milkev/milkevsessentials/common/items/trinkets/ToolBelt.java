@@ -2,15 +2,20 @@ package net.milkev.milkevsessentials.common.items.trinkets;
 
 import dev.emi.trinkets.api.TrinketItem;
 import dev.emi.trinkets.api.TrinketsApi;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ToolBelt extends TrinketItem {
@@ -103,6 +108,16 @@ public class ToolBelt extends TrinketItem {
         String toolBeltItemIDNamespace = toolBeltItemIDString.substring(toolBeltItemIDString.indexOf(":")+1, toolBeltItemIDString.length()-1);
         //System.out.println("NAMESPACE OF ITEM TO GO TO HOTBAR: " + toolBeltItemIDNamespace);
         return new Identifier(toolBeltItemIDMOD_ID, toolBeltItemIDNamespace);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+
+        //trinkets wont auto put the 'equip in slot' on this trinket, dunno why :/
+        tooltip.add(new TranslatableText("item.milkevsessentials.toolbelt.equip_in_slot"));
+        //displays that the trinket allows moar hotbar
+        tooltip.add(new TranslatableText("item.milkevsessentials.toolbelt.when_equip"));
+        tooltip.add(new TranslatableText("item.milkevsessentials.toolbelt.allow"));
     }
 
 }

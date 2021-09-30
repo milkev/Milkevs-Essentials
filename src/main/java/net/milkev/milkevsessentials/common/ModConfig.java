@@ -14,6 +14,10 @@ public class ModConfig implements ConfigData {
     //public boolean enableAmethystLauncher = false;
     @Comment("If Tool belt is enabled. Default: true")
     public boolean enableToolBelt = true;
+    @Comment("If Instant Shield Blocking is enabled. Default: true")
+    public boolean enableInstantShieldBlocking = true;
+    @Comment("If holding shield up should negate fall damage. Default: false")
+    public boolean enableShieldBlocksFallDamage = false;
     @Comment("Extendo Grips reach buffs\n" +
             "Default: 3")
     public int extendoGripsLowBlockReach = 3;

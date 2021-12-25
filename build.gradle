@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.9-SNAPSHOT'
+	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -10,25 +10,42 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+repositories {
+	mavenCentral()
+	//reach entity attributes
+	maven {	url "https://maven.jamieswhiteshirt.com/libs-release"}
+	//trinkets
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
+	//cardinal components
+	maven {
+		name = 'Ladysnake Mods'
+		url = 'https://ladysnake.jfrog.io/artifactory/mods'
+	}
+	maven { url "https://maven.shedaniel.me/" }
+}
+
 dependencies {
 	//to change the versions see the gradle.properties file
 	//minecraft version
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	//yarn mappings
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
 	//fabric loader
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	//fabric api
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	//this mod allows extendo grips to increase block reach and range
-	include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}")
+	include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}")
 	//trinkets, to equip trinkets
-	modImplementation "dev.emi:trinkets:${trinkets_version}"
+	modImplementation "dev.emi:trinkets:${project.trinkets_version}"
 	//cardinal components api bcus trinkets???
-	modImplementation "dev.whomst:cardinal-components-base:${cardinal_components_version}"
-	modImplementation "dev.whomst:cardinal-components-entity:${cardinal_components_version}"
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components_version}"
 	//config api
-	modApi("me.shedaniel.cloth:cloth-config:${cloth_config_version}-fabric") {
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 }
@@ -72,19 +89,6 @@ jar {
 	from "LICENSE"
 }
 
-repositories {
-	mavenCentral()
-	//reach entity attributes
-	maven {	url "https://maven.jamieswhiteshirt.com/libs-release"}
-	//mod menu
-	//maven {	url = "https://maven.terraformersmc.com/"}
-	//trinkets cardinal components
-	maven {
-		name = "LadysnakeLibs"
-		url = "https://ladysnake.jfrog.io/artifactory/mods"
-	}
-	maven { url "https://maven.shedaniel.me/" }
-}
 
 // configure the maven publication
 publishing {

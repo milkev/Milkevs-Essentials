@@ -76,7 +76,7 @@ public class MilkevsEssentials implements ModInitializer {
 			ToolBeltNetworking.init();
 		}
 
-		MilkevRecipeRegistry.init();
+		//MilkevRecipeRegistry.init();
 
 		System.out.println(MOD_ID + " Initialized");
 	}

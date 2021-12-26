@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#N#",
+    "DLD",
+    "/n/"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:ender_pearl"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "/": {
+      "item": "minecraft:end_rod"
+    },
+    "L": {
+      "item": "milkevsessentials:extendo_grip_normal"
+    },
+    "n": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "milkevsessentials:extendo_grip_high",
+    "count": 1
+  }
+}

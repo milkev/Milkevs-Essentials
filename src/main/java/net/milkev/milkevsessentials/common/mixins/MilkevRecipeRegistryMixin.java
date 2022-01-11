@@ -16,7 +16,7 @@ import java.util.Map;
 @Mixin(RecipeManager.class)
 public class MilkevRecipeRegistryMixin {
 
-
+        /*
         String MOD_ID = "milkevsessentials";
 
         @Inject(method = "apply", at = @At("HEAD"))
@@ -33,6 +33,7 @@ public class MilkevRecipeRegistryMixin {
                 map.putIfAbsent(new Identifier(MOD_ID, "toolbelt"), MilkevRecipeRegistry.TOOLBELT);
             }
         }
+        */
 
 }
 

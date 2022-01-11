@@ -9,7 +9,10 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.fabric.api.tag.TagFactory;
+import net.fabricmc.loader.api.FabricLoader;
 import net.milkev.milkevsessentials.common.items.trinkets.ExtendoGrip;
 import net.milkev.milkevsessentials.common.items.trinkets.FlightCharm;
 import net.milkev.milkevsessentials.common.items.trinkets.ToolBelt;
@@ -59,19 +62,25 @@ public class MilkevsEssentials implements ModInitializer {
 		ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
 		if(config.enableExtendoGrips) {
+			DynamicDataRecipe("extendo_grip_low");
+			DynamicDataRecipe("extendo_grip_normal");
+			DynamicDataRecipe("extendo_grip_high");
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_low"), setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach));
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_normal"), setExtendoGrips(config.extendoGripsNormalBlockReach, config.extendoGripsNormalAttackReach));
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_high"), setExtendoGrips(config.extendoGripsHighBlockReach, config.extendoGripsHighAttackReach));
 		}
 		if(config.enableFlightCharm) {
+			DynamicDataRecipe("flight_charm");
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "flight_charm"), FLIGHT_CHARM);
 		}
 		/*
 		if(config.enableAmethystLauncher) {
+			//DynamicDataRecipe("amethyst_launcher"); //recipe doesnt exist yet
 			TagFactory.ITEM.create(new Identifier(MOD_ID, "amethyst_shard"));
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "amethyst_launcher"), AMETHYST_LAUNCHER);
 		}*/
 		if(config.enableToolBelt) {
+			DynamicDataRecipe("toolbelt");
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "toolbelt"), TOOL_BELT);
 			ToolBeltNetworking.init();
 		}
@@ -79,6 +88,12 @@ public class MilkevsEssentials implements ModInitializer {
 		//MilkevRecipeRegistry.init();
 
 		System.out.println(MOD_ID + " Initialized");
+	}
+
+	public void DynamicDataRecipe(String recipeName) {
+		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
+			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, recipeName), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
+		});
 	}
 
 	public ExtendoGrip setExtendoGrips(int reach, int attack_reach) {

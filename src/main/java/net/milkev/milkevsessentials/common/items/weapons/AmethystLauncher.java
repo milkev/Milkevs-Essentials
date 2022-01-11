@@ -23,7 +23,9 @@ import java.util.function.Predicate;
 
 public class AmethystLauncher extends RangedWeaponItem {
 
-    private final Tag<Item> amethystShardTag = MilkevTagRegistry.AMETHYST_SHARD;
+
+    //private final Tag<Item> amethystShardTag = MilkevTagRegistry.AMETHYST_SHARD;
+    private final Tag<Item> amethystShardTag = null;
 
     public static boolean isCharged(ItemStack stack) {
         NbtCompound nbtCompound = stack.getNbt();

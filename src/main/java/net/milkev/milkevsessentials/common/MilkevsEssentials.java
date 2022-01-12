@@ -62,15 +62,13 @@ public class MilkevsEssentials implements ModInitializer {
 		ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
 		if(config.enableExtendoGrips) {
-			DynamicDataRecipe("extendo_grip_low");
-			DynamicDataRecipe("extendo_grip_normal");
-			DynamicDataRecipe("extendo_grip_high");
+			DynamicDatapacks("extendo_grips");
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_low"), setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach));
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_normal"), setExtendoGrips(config.extendoGripsNormalBlockReach, config.extendoGripsNormalAttackReach));
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_high"), setExtendoGrips(config.extendoGripsHighBlockReach, config.extendoGripsHighAttackReach));
 		}
 		if(config.enableFlightCharm) {
-			DynamicDataRecipe("flight_charm");
+			DynamicDatapacks("flight_charm");
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "flight_charm"), FLIGHT_CHARM);
 		}
 		/*
@@ -80,7 +78,7 @@ public class MilkevsEssentials implements ModInitializer {
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "amethyst_launcher"), AMETHYST_LAUNCHER);
 		}*/
 		if(config.enableToolBelt) {
-			DynamicDataRecipe("toolbelt");
+			DynamicDatapacks("toolbelt");
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "toolbelt"), TOOL_BELT);
 			ToolBeltNetworking.init();
 		}
@@ -90,10 +88,11 @@ public class MilkevsEssentials implements ModInitializer {
 		System.out.println(MOD_ID + " Initialized");
 	}
 
-	public void DynamicDataRecipe(String recipeName) {
+	public void DynamicDatapacks(String datapackName) {
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
-			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, recipeName), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
+			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, datapackName), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
 		});
+		//System.out.println("Datapack Added: " + datapackName);
 	}
 
 	public ExtendoGrip setExtendoGrips(int reach, int attack_reach) {

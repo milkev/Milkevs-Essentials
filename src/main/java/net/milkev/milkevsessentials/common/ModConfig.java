@@ -31,4 +31,6 @@ public class ModConfig implements ConfigData {
     public int extendoGripsHighBlockReach = 15;
     @Comment("Default: 15")
     public int extendoGripsHighAttackReach = 15;
+    @Comment("Wether Milkevs Custom Rules are enabled. Consists of ancient debris and wheat being effected by fortune, as well as crafting recipes for cobweb from string and vice versa")
+    public boolean milkevsCustomRules = true;
 }

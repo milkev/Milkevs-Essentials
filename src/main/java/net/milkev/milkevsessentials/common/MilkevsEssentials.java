@@ -82,6 +82,10 @@ public class MilkevsEssentials implements ModInitializer {
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "toolbelt"), TOOL_BELT);
 			ToolBeltNetworking.init();
 		}
+		if(config.milkevsCustomRules) {
+			DynamicDatapacks("milkevscustomrules");
+		}
+
 
 		//MilkevRecipeRegistry.init();
 

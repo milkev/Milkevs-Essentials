@@ -29,12 +29,14 @@ public class ToolBeltNetworking {
 
         //System.out.println("recieve use tool belt packet called!");
         Optional<TrinketComponent> trinketComponent = TrinketsApi.getTrinketComponent(serverPlayerEntity);
-        if(trinketComponent.get().isEquipped(MilkevsEssentials.TOOL_BELT)) {
-            //System.out.println("toolbelt is equipped!");
-            ItemStack toolBelt = getToolBeltItemStack(trinketComponent);
-            MilkevsEssentials.TOOL_BELT.swapItems(serverPlayerEntity, toolBelt);
-        } else {
-            //System.out.println("toolbelt is not equipped!");
+        if(MilkevsEssentials.TOOL_BELT != null) {
+            if (trinketComponent.get().isEquipped(MilkevsEssentials.TOOL_BELT)) {
+                //System.out.println("toolbelt is equipped!");
+                ItemStack toolBelt = getToolBeltItemStack(trinketComponent);
+                MilkevsEssentials.TOOL_BELT.swapItems(serverPlayerEntity, toolBelt);
+            } else {
+                //System.out.println("toolbelt is not equipped!");
+            }
         }
 
     }

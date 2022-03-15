@@ -145,6 +145,7 @@ public class AmethystLauncher extends RangedWeaponItem {
 
     private ItemStack getProjectiles(PlayerEntity playerEntity) {
         //System.out.println(playerEntity.getInventory().getStack(0));
+        /*
         if(playerEntity.getInventory().contains(amethystShardTag)) {
             //System.out.println("has amethyst shard");
             for (int i = 0; i < 50;) {
@@ -154,6 +155,7 @@ public class AmethystLauncher extends RangedWeaponItem {
                 i = i + 1;
             }
         }
+         */
         return ItemStack.EMPTY;
     }
 

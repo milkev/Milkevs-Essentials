@@ -11,7 +11,6 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
-import net.fabricmc.fabric.api.tag.TagFactory;
 import net.fabricmc.loader.api.FabricLoader;
 import net.milkev.milkevsessentials.common.items.trinkets.ExtendoGrip;
 import net.milkev.milkevsessentials.common.items.trinkets.FlightCharm;
@@ -39,9 +38,9 @@ public class MilkevsEssentials implements ModInitializer {
 
 	public static final String MOD_ID = "milkevsessentials";
 
-	public static final FlightCharm FLIGHT_CHARM = new FlightCharm(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS));
+	public static FlightCharm FLIGHT_CHARM = null;
 
-	public static final ToolBelt TOOL_BELT = new ToolBelt(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS));
+	public static ToolBelt TOOL_BELT = null;
 
 	/*
 	public static final AmethystLauncher AMETHYST_LAUNCHER = new AmethystLauncher(new FabricItemSettings().maxCount(1).group(ItemGroup.COMBAT));
@@ -68,6 +67,7 @@ public class MilkevsEssentials implements ModInitializer {
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_high"), setExtendoGrips(config.extendoGripsHighBlockReach, config.extendoGripsHighAttackReach));
 		}
 		if(config.enableFlightCharm) {
+			FLIGHT_CHARM = new FlightCharm(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS));
 			DynamicDatapacks("flight_charm");
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "flight_charm"), FLIGHT_CHARM);
 		}
@@ -78,6 +78,7 @@ public class MilkevsEssentials implements ModInitializer {
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "amethyst_launcher"), AMETHYST_LAUNCHER);
 		}*/
 		if(config.enableToolBelt) {
+			TOOL_BELT = new ToolBelt(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS));
 			DynamicDatapacks("toolbelt");
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "toolbelt"), TOOL_BELT);
 			ToolBeltNetworking.init();
@@ -96,6 +97,7 @@ public class MilkevsEssentials implements ModInitializer {
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
 			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, datapackName), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
 		});
+
 		//System.out.println("Datapack Added: " + datapackName);
 	}
 

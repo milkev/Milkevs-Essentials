@@ -8,7 +8,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -43,9 +42,9 @@ public class FlightCharm extends TrinketItem {
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
 
         //trinkets wont auto put the 'equip in slot' on this charm, dunno why :/
-        tooltip.add(new TranslatableText("item.milkevsessentials.flight_charm.equip_in_slot"));
+        tooltip.add(Text.translatable("item.milkevsessentials.flight_charm.equip_in_slot"));
         //displays that the charm enables flight
-        tooltip.add(new TranslatableText("item.milkevsessentials.flight_charm.when_equip"));
-        tooltip.add(new TranslatableText("item.milkevsessentials.flight_charm.allows_flight"));
+        tooltip.add(Text.translatable("item.milkevsessentials.flight_charm.when_equip"));
+        tooltip.add(Text.translatable("item.milkevsessentials.flight_charm.allows_flight"));
     }
 }

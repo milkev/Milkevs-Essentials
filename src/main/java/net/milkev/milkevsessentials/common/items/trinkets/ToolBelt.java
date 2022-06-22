@@ -10,7 +10,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -114,10 +113,10 @@ public class ToolBelt extends TrinketItem {
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
 
         //trinkets wont auto put the 'equip in slot' on this trinket, dunno why :/
-        tooltip.add(new TranslatableText("item.milkevsessentials.toolbelt.equip_in_slot"));
+        tooltip.add(Text.translatable("item.milkevsessentials.toolbelt.equip_in_slot"));
         //displays that the trinket allows moar hotbar
-        tooltip.add(new TranslatableText("item.milkevsessentials.toolbelt.when_equip"));
-        tooltip.add(new TranslatableText("item.milkevsessentials.toolbelt.allow"));
+        tooltip.add(Text.translatable("item.milkevsessentials.toolbelt.when_equip"));
+        tooltip.add(Text.translatable("item.milkevsessentials.toolbelt.allow"));
     }
 
 }

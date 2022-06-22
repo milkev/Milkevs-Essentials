@@ -10,7 +10,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.Tag;
+//import net.minecraft.tag.Tag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
@@ -25,7 +25,7 @@ public class AmethystLauncher extends RangedWeaponItem {
 
 
     //private final Tag<Item> amethystShardTag = MilkevTagRegistry.AMETHYST_SHARD;
-    private final Tag<Item> amethystShardTag = null;
+    //private final Tag<Item> amethystShardTag = null;
 
     public static boolean isCharged(ItemStack stack) {
         NbtCompound nbtCompound = stack.getNbt();

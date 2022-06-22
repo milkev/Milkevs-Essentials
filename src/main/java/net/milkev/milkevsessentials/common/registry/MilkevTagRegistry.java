@@ -1,7 +1,7 @@
 package net.milkev.milkevsessentials.common.registry;
 
 import net.minecraft.item.Item;
-import net.minecraft.tag.Tag;
+//import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
 public class MilkevTagRegistry {

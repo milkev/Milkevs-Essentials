@@ -4,10 +4,10 @@ import dev.emi.trinkets.api.TrinketItem;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ToolBelt extends TrinketItem {
 
@@ -58,7 +59,7 @@ public class ToolBelt extends TrinketItem {
             }
             if (!toolBeltItemID.equals(new Identifier("minecraft", "air"))) {
                 //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": " + toolBeltItemID + ", COUNT: " + count);
-                toHotbar = new ItemStack(Registries.ITEM.get(toolBeltItemID), count);
+                toHotbar = new ItemStack(Registry.ITEM.get(toolBeltItemID), count);
                 if (toolBeltItemNbt != null) {
                     //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": NBT: " + toolBeltItemNbt);
                     toHotbar.setNbt((NbtCompound) toolBeltItemNbt);
@@ -73,7 +74,7 @@ public class ToolBelt extends TrinketItem {
             ItemStack itemStack = player.getInventory().getStack(i);
             NbtElement itemNbt = itemStack.getNbt();
             //get ID of item we want to put into the toolbelt
-            Identifier ID = Registries.ITEM.getId(player.getInventory().getStack(i).getItem());
+            Identifier ID = Registry.ITEM.getId(player.getInventory().getStack(i).getItem());
 
             if (itemStack != ItemStack.EMPTY) {
                 if (itemNbt != null) {

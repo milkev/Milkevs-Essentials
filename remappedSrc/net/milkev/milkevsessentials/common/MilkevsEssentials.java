@@ -1,5 +1,6 @@
 package net.milkev.milkevsessentials.common;
 
+import Z;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -7,7 +8,6 @@ import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.annotation.Nullable;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -23,13 +23,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import org.lwjgl.system.CallbackI;
 
@@ -68,15 +63,14 @@ public class MilkevsEssentials implements ModInitializer {
 
 		if(config.enableExtendoGrips) {
 			DynamicDatapacks("extendo_grips");
-			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "extendo_grip_low"), setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach));
-			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "extendo_grip_normal"), setExtendoGrips(config.extendoGripsNormalBlockReach, config.extendoGripsNormalAttackReach));
-			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "extendo_grip_high"), setExtendoGrips(config.extendoGripsHighBlockReach, config.extendoGripsHighAttackReach));
+			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_low"), setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach));
+			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_normal"), setExtendoGrips(config.extendoGripsNormalBlockReach, config.extendoGripsNormalAttackReach));
+			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "extendo_grip_high"), setExtendoGrips(config.extendoGripsHighBlockReach, config.extendoGripsHighAttackReach));
 		}
 		if(config.enableFlightCharm) {
-			FLIGHT_CHARM = new FlightCharm(new FabricItemSettings().maxCount(1));
-			AddToGroup(ItemGroups.TOOLS, FLIGHT_CHARM);
+			FLIGHT_CHARM = new FlightCharm(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS));
 			DynamicDatapacks("flight_charm");
-			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "flight_charm"), FLIGHT_CHARM);
+			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "flight_charm"), FLIGHT_CHARM);
 		}
 		/*
 		if(config.enableAmethystLauncher) {
@@ -85,10 +79,9 @@ public class MilkevsEssentials implements ModInitializer {
 			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "amethyst_launcher"), AMETHYST_LAUNCHER);
 		}*/
 		if(config.enableToolBelt) {
-			TOOL_BELT = new ToolBelt(new FabricItemSettings().maxCount(1));
-			AddToGroup(ItemGroups.TOOLS, TOOL_BELT);
+			TOOL_BELT = new ToolBelt(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS));
 			DynamicDatapacks("toolbelt");
-			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "toolbelt"), TOOL_BELT);
+			Registry.register(Registry.ITEM, new Identifier(MOD_ID, "toolbelt"), TOOL_BELT);
 			ToolBeltNetworking.init();
 		}
 		if(config.milkevsCustomRules) {
@@ -110,15 +103,7 @@ public class MilkevsEssentials implements ModInitializer {
 	}
 
 	public ExtendoGrip setExtendoGrips(int reach, int attack_reach) {
-		ExtendoGrip grip = new ExtendoGrip(new FabricItemSettings().maxCount(1), reach, attack_reach);
-		AddToGroup(ItemGroups.TOOLS, grip);
-		return grip;
-	}
-
-	public void AddToGroup(RegistryKey<ItemGroup> group, ItemConvertible item) {
-		ItemGroupEvents.modifyEntriesEvent(group).register(content -> {
-			content.add(item);
-		});
+		return new ExtendoGrip(new FabricItemSettings().maxCount(1).group(ItemGroup.TOOLS), reach, attack_reach);
 	}
 
 

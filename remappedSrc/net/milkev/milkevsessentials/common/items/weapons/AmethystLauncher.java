@@ -10,10 +10,13 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+//import net.minecraft.tag.Tag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
 import java.util.function.Predicate;
@@ -70,11 +73,11 @@ public class AmethystLauncher extends RangedWeaponItem {
                 PersistentProjectileEntity ammoEntity = arrowItem.createArrow(world, ammo, user);
                 //set velocity
                 Vec3d vec3d = user.getOppositeRotationVector(1.0F);
-                //Quaternion quaternion = new Quaternion(new Vec3f(vec3d), 0, true);
+                Quaternion quaternion = new Quaternion(new Vec3f(vec3d), 0, true);
                 Vec3d vec3d2 = user.getRotationVec(1.0F);
-                //Vec3f vec3f = new Vec3f(vec3d2);
-                //vec3f.rotate(quaternion);
-                //((ProjectileEntity)ammoEntity).setVelocity(vec3f.getX(), vec3f.getY(), vec3f.getZ(), 1, 0);
+                Vec3f vec3f = new Vec3f(vec3d2);
+                vec3f.rotate(quaternion);
+                ((ProjectileEntity)ammoEntity).setVelocity(vec3f.getX(), vec3f.getY(), vec3f.getZ(), 1, 0);
                 //set sounds
                 ammoEntity.setSound(SoundEvents.ITEM_CROSSBOW_HIT);
                 ammoEntity.setShotFromCrossbow(true);

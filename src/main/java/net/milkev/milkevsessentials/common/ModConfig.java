@@ -33,4 +33,6 @@ public class ModConfig implements ConfigData {
     public int extendoGripsHighAttackReach = 15;
     @Comment("Wether Milkevs Custom Rules are enabled. Consists of ancient debris and wheat being effected by fortune, as well as crafting recipes for cobweb from string and vice versa")
     public boolean milkevsCustomRules = true;
+    @Comment("If you should be able to make leather from rotten flesh")
+    public boolean rottenFleshToLeather = true;
 }

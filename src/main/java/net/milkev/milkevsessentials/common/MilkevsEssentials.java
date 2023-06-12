@@ -23,10 +23,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -47,6 +44,8 @@ public class MilkevsEssentials implements ModInitializer {
 	public static FlightCharm FLIGHT_CHARM = null;
 
 	public static ToolBelt TOOL_BELT = null;
+
+	public static Item CONDENSED_ROTTEN_FLESH = null;
 
 	/*
 	public static final AmethystLauncher AMETHYST_LAUNCHER = new AmethystLauncher(new FabricItemSettings().maxCount(1).group(ItemGroup.COMBAT));
@@ -93,6 +92,13 @@ public class MilkevsEssentials implements ModInitializer {
 		}
 		if(config.milkevsCustomRules) {
 			DynamicDatapacks("milkevscustomrules");
+		}
+
+		if(config.rottenFleshToLeather) {
+			CONDENSED_ROTTEN_FLESH = new Item(new FabricItemSettings().maxCount(64));
+			AddToGroup(ItemGroups.INGREDIENTS, CONDENSED_ROTTEN_FLESH);
+			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "condensed_rotten_flesh"), CONDENSED_ROTTEN_FLESH);
+			DynamicDatapacks("rottenfleshtoleather");
 		}
 
 

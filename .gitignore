@@ -4,3 +4,5 @@
 /.gradle/
 /run/
 *.psd
+*.kra
+*.kra~

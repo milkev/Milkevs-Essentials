@@ -2,8 +2,10 @@ package net.milkev.milkevsessentials.common.items.trinkets;
 
 import dev.emi.trinkets.api.TrinketItem;
 import dev.emi.trinkets.api.TrinketsApi;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -16,11 +18,13 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ToolBelt extends TrinketItem {
+public class ToolBelt extends CharmWithTooltip {
 
     public ToolBelt(Settings settings) {
-        super(settings);
-        TrinketsApi.registerTrinket(this, this);
+        super(settings, "toolbelt.tooltip",  "toolbelt");
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {
+            content.add(this);
+        });
     }
 
     public void swapItems(ServerPlayerEntity player, ItemStack toolBelt) {
@@ -108,14 +112,5 @@ public class ToolBelt extends TrinketItem {
         return new Identifier(toolBeltItemIDMOD_ID, toolBeltItemIDNamespace);
     }
 
-    @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-
-        //trinkets wont auto put the 'equip in slot' on this trinket, dunno why :/
-        tooltip.add(Text.translatable("item.milkevsessentials.toolbelt.equip_in_slot"));
-        //displays that the trinket allows moar hotbar
-        tooltip.add(Text.translatable("item.milkevsessentials.toolbelt.when_equip"));
-        tooltip.add(Text.translatable("item.milkevsessentials.toolbelt.allow"));
-    }
 
 }

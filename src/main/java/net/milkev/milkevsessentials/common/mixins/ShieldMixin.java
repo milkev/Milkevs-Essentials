@@ -13,16 +13,18 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 
 @Mixin(PlayerEntity.class)
 public abstract class ShieldMixin extends LivingEntity {
 
+    ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+
+
     public ShieldMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
-
-
-    ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
     public boolean isBlocking() {
         if(config.enableInstantShieldBlocking) {

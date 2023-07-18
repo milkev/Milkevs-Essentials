@@ -3,20 +3,25 @@ package net.milkev.milkevsessentials.common.items.trinkets;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
 import dev.emi.trinkets.api.TrinketsApi;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class FlightCharm extends TrinketItem {
+public class FlightCharm extends CharmWithTooltip {
 
     public FlightCharm(Settings settings) {
-        super(settings);
+        super(settings, "flight_charm.tooltip", "flight_charm");
         TrinketsApi.registerTrinket(this, this);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {
+            content.add(this);
+        });
     }
 
     @Override
@@ -36,15 +41,5 @@ public class FlightCharm extends TrinketItem {
             }
         }
         super.onUnequip(stack, slot, entity);
-    }
-
-    @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-
-        //trinkets wont auto put the 'equip in slot' on this charm, dunno why :/
-        tooltip.add(Text.translatable("item.milkevsessentials.flight_charm.equip_in_slot"));
-        //displays that the charm enables flight
-        tooltip.add(Text.translatable("item.milkevsessentials.flight_charm.when_equip"));
-        tooltip.add(Text.translatable("item.milkevsessentials.flight_charm.allows_flight"));
     }
 }

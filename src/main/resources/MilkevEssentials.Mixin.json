@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "FlightCharmMixin",
-    "ShieldMixin"
+    "ShieldMixin",
+    "GluttonyCharmMixin",
+    "OPGluttonyCharmMixin"
   ],
   "client": [
   ],

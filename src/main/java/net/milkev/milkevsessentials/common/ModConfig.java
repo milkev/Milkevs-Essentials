@@ -35,4 +35,8 @@ public class ModConfig implements ConfigData {
     public boolean milkevsCustomRules = true;
     @Comment("If you should be able to make leather from rotten flesh")
     public boolean rottenFleshToLeather = true;
+    @Comment("If Gluttony Charm should be enabled. Default: true")
+    public boolean gluttonyCharm = true;
+    @Comment("If OP Gluttony Charm should be enabled. Default: true")
+    public boolean opGluttonyCharm = true;
 }

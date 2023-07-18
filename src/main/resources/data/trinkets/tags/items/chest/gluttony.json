@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    {"id": "milkevsessentials:gluttony_charm", "required": false },
+    {"id": "milkevsessentials:op_gluttony_charm", "required": false }
+  ]
+}

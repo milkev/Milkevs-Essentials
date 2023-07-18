@@ -1,40 +1,26 @@
 package net.milkev.milkevsessentials.common;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.sun.jna.platform.win32.GL;
+import dev.emi.trinkets.api.Trinket;
+import dev.emi.trinkets.api.TrinketItem;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.annotation.Nullable;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.milkev.milkevsessentials.common.items.trinkets.CharmWithTooltip;
 import net.milkev.milkevsessentials.common.items.trinkets.ExtendoGrip;
 import net.milkev.milkevsessentials.common.items.trinkets.FlightCharm;
 import net.milkev.milkevsessentials.common.items.trinkets.ToolBelt;
-import net.milkev.milkevsessentials.common.items.weapons.AmethystLauncher;
 import net.milkev.milkevsessentials.common.network.ToolBeltNetworking;
-import net.milkev.milkevsessentials.common.registry.MilkevRecipeRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
-import org.lwjgl.system.CallbackI;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Objects;
 
 public class MilkevsEssentials implements ModInitializer {
 
@@ -46,6 +32,9 @@ public class MilkevsEssentials implements ModInitializer {
 	public static ToolBelt TOOL_BELT = null;
 
 	public static Item CONDENSED_ROTTEN_FLESH = null;
+
+	public static CharmWithTooltip GLUTTONY_CHARM = null;
+	public static CharmWithTooltip OP_GLUTTONY_CHARM = null;
 
 	/*
 	public static final AmethystLauncher AMETHYST_LAUNCHER = new AmethystLauncher(new FabricItemSettings().maxCount(1).group(ItemGroup.COMBAT));
@@ -73,7 +62,6 @@ public class MilkevsEssentials implements ModInitializer {
 		}
 		if(config.enableFlightCharm) {
 			FLIGHT_CHARM = new FlightCharm(new FabricItemSettings().maxCount(1));
-			AddToGroup(ItemGroups.TOOLS, FLIGHT_CHARM);
 			DynamicDatapacks("flight_charm");
 			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "flight_charm"), FLIGHT_CHARM);
 		}
@@ -85,7 +73,6 @@ public class MilkevsEssentials implements ModInitializer {
 		}*/
 		if(config.enableToolBelt) {
 			TOOL_BELT = new ToolBelt(new FabricItemSettings().maxCount(1));
-			AddToGroup(ItemGroups.TOOLS, TOOL_BELT);
 			DynamicDatapacks("toolbelt");
 			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "toolbelt"), TOOL_BELT);
 			ToolBeltNetworking.init();
@@ -93,12 +80,21 @@ public class MilkevsEssentials implements ModInitializer {
 		if(config.milkevsCustomRules) {
 			DynamicDatapacks("milkevscustomrules");
 		}
-
 		if(config.rottenFleshToLeather) {
 			CONDENSED_ROTTEN_FLESH = new Item(new FabricItemSettings().maxCount(64));
 			AddToGroup(ItemGroups.INGREDIENTS, CONDENSED_ROTTEN_FLESH);
 			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "condensed_rotten_flesh"), CONDENSED_ROTTEN_FLESH);
 			DynamicDatapacks("rottenfleshtoleather");
+		}
+		if(config.gluttonyCharm) {
+			GLUTTONY_CHARM = new CharmWithTooltip(new FabricItemSettings().maxCount(1), "gluttony_charm.tooltip", "gluttony");
+			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "gluttony_charm"), GLUTTONY_CHARM);
+			DynamicDatapacks("gluttony_charm");
+		}
+		if(config.opGluttonyCharm) {
+			OP_GLUTTONY_CHARM = new CharmWithTooltip(new FabricItemSettings().maxCount(1), "op_gluttony_charm.tooltip", "gluttony");
+			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "op_gluttony_charm"), OP_GLUTTONY_CHARM);
+			DynamicDatapacks("op_gluttony_charm");
 		}
 
 

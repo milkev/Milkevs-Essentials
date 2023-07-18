@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#ET",
+    "HRD",
+    "SNL"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glow_berries"
+    },
+    "E": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "T": {
+      "item": "minecraft:turtle_egg"
+    },
+    "H": {
+      "item": "minecraft:honey_bottle"
+    },
+    "R": {
+      "item": "milkevsessentials:gluttony_charm"
+    },
+    "D": {
+      "item": "minecraft:dragon_egg"
+    },
+    "S": {
+      "item": "minecraft:sniffer_egg"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "L": {
+      "item": "minecraft:rabbit_stew"
+    }
+  },
+  "result": {
+    "item": "milkevsessentials:op_gluttony_charm",
+    "count": 1
+  }
+}

@@ -12,9 +12,9 @@ import java.util.UUID;
 public class ExtendoGrip extends TrinketItem {
     private int reach;
     private int attack_reach;
+
     public ExtendoGrip(Settings settings, int reach_set, int attack_reach_set) {
         super(settings);
-        TrinketsApi.registerTrinket(this, this);
         reach = reach_set;
         attack_reach = attack_reach_set;
     }

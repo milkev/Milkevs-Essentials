@@ -28,6 +28,8 @@ repositories {
 		url = 'https://ladysnake.jfrog.io/artifactory/mods'
 	}
 	maven { url "https://maven.shedaniel.me/" }
+	//Meal API
+	maven { url "https://api.modrinth.com/maven" }
 }
 
 dependencies {
@@ -51,6 +53,8 @@ dependencies {
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
+	//meal api
+	modApi "maven.modrinth:mealapi:${project.meal_api_version}"
 }
 
 processResources {

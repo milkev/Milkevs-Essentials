@@ -3,11 +3,13 @@
   "required": true,
   "package": "net.milkev.milkevsessentials.common.mixins",
   "compatibilityLevel": "JAVA_16",
+  "plugin": "net.milkev.milkevsessentials.common.compat.MilkevsEssentialsMixinCondition",
   "mixins": [
     "FlightCharmMixin",
     "ShieldMixin",
     "GluttonyCharmMixin",
-    "OPGluttonyCharmMixin"
+    "OPGluttonyCharmMixin",
+    "OPGluttonyCharmMixinMealAPI"
   ],
   "client": [
   ],

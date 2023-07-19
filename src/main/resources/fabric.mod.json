@@ -38,5 +38,6 @@
     "cloth-config2": ">=7.0.72"
   },
   "suggests": {
+    "mealapi": ">=0.3.2"
   }
 }

@@ -1,8 +1,5 @@
 package net.milkev.milkevsessentials.common;
 
-import com.sun.jna.platform.win32.GL;
-import dev.emi.trinkets.api.Trinket;
-import dev.emi.trinkets.api.TrinketItem;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -20,8 +17,10 @@ import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.collection.DefaultedList;
 
 public class MilkevsEssentials implements ModInitializer {
 
@@ -31,6 +30,9 @@ public class MilkevsEssentials implements ModInitializer {
 	public static FlightCharm FLIGHT_CHARM = null;
 
 	public static ToolBelt TOOL_BELT = null;
+
+	public static final Identifier TOOLBELT_PICKUP_ID = new Identifier(MOD_ID, "toolbelt_pickup");
+	public static SoundEvent TOOLBELT_PICKUP = SoundEvent.of(TOOLBELT_PICKUP_ID);
 
 	public static Item CONDENSED_ROTTEN_FLESH = null;
 
@@ -52,9 +54,10 @@ public class MilkevsEssentials implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-		AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
+		//AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
+		//Config registered in MilkevsEssentialsMixinCondition.java
 		ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-
+gi
 		if(config.enableExtendoGrips) {
 			DynamicDatapacks("extendo_grips");
 			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "extendo_grip_low"),
@@ -80,6 +83,7 @@ public class MilkevsEssentials implements ModInitializer {
 			DynamicDatapacks("toolbelt");
 			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "toolbelt"), TOOL_BELT);
 			ToolBeltNetworking.init();
+			Registry.register(Registries.SOUND_EVENT, TOOLBELT_PICKUP_ID, TOOLBELT_PICKUP);
 		}
 		if(config.milkevsCustomRules) {
 			DynamicDatapacks("milkevscustomrules");

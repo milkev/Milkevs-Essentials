@@ -21,5 +21,6 @@
   "trinkets.slot.legs.belt": "Belt",
   "trinkets.slot.chest.gluttony": "Stomach",
   "category.milkevsessentials.keybind_category": "Milkevs Essentials",
-  "key.milkevsessentials.tool_belt": "Activate Toolbelt (swaps hotbars)"
+  "key.milkevsessentials.tool_belt": "Activate Toolbelt (swaps hotbars)",
+  "subtitles.milkevsessentials.toolbelt_pickup": "Toolbelt Item Pickup"
 }

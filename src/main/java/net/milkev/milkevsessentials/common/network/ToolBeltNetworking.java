@@ -5,14 +5,14 @@ import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.milkev.milkevsessentials.common.MilkevsEssentials;
-import net.minecraft.item.Item;
+import net.milkev.milkevsessentials.common.items.trinkets.ToolBelt;
+import net.milkev.milkevsessentials.common.items.trinkets.ToolBeltInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import org.lwjgl.system.CallbackI;
 
 import java.util.Optional;
 
@@ -32,8 +32,15 @@ public class ToolBeltNetworking {
         if(MilkevsEssentials.TOOL_BELT != null) {
             if (trinketComponent.get().isEquipped(MilkevsEssentials.TOOL_BELT)) {
                 //System.out.println("toolbelt is equipped!");
+
                 ItemStack toolBelt = getToolBeltItemStack(trinketComponent);
-                MilkevsEssentials.TOOL_BELT.swapItems(serverPlayerEntity, toolBelt);
+
+                ToolBeltInventory toolBeltInventory = ToolBelt.load(toolBelt);
+
+                toolBeltInventory.swapItems(serverPlayerEntity, toolBelt);
+
+                ToolBelt.save(toolBeltInventory, toolBelt);
+
             } else {
                 //System.out.println("toolbelt is not equipped!");
             }
@@ -47,6 +54,7 @@ public class ToolBeltNetworking {
                 return trinketComponent.get().getAllEquipped().get(i).getRight();
             }
         }
+        //technically unreachable in use case, but :shrug:
         return ItemStack.EMPTY;
     }
 

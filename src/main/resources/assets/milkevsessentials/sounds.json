@@ -1,0 +1,8 @@
+{
+  "toolbelt_pickup": {
+    "subtitle": "subtitles.milkevsessentials.toolbelt_pickup",
+    "sounds": [
+      "milkevsessentials:toolbelt_pickup"
+    ]
+  }
+}

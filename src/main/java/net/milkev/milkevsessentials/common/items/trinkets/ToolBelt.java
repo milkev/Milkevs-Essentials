@@ -1,22 +1,24 @@
 package net.milkev.milkevsessentials.common.items.trinkets;
 
-import dev.emi.trinkets.api.TrinketItem;
-import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.client.item.TooltipContext;
+import net.milkev.milkevsessentials.common.MilkevsEssentials;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.util.collection.DefaultedList;
 
-import java.util.List;
+import java.util.Objects;
 
 public class ToolBelt extends CharmWithTooltip {
 
@@ -27,6 +29,98 @@ public class ToolBelt extends CharmWithTooltip {
         });
     }
 
+    public static void save(ToolBeltInventory toolBeltInventory, ItemStack itemStack) {
+        for(int i = 0; i < 9; i++) {
+            NbtCompound inventoryAsNbt = toolBeltInventory.getStack(i).writeNbt(new NbtCompound());
+            //System.out.println(i);
+            //System.out.println("Saving from: " + toolBeltInventory.getStack(i));
+            //System.out.println("Saving as: " + inventoryAsNbt);
+            itemStack.setSubNbt(String.valueOf(i), inventoryAsNbt);
+        }
+    }
+
+    public static ToolBeltInventory load(ItemStack itemStack) {
+
+        ToolBeltInventory toolBeltInventory = new ToolBeltInventory();
+
+        if(itemStack.hasNbt()) {
+
+            if(itemStack.getNbt().asString().contains("Slot_")) {
+                itemStack = updateOldItem(itemStack);
+            }
+
+            NbtList nbtList = new NbtList();
+            for (int i = 0; i < 9; i++) {
+                //System.out.println("Nbt of " + i + ": " + itemStack.getNbt());
+                nbtList.add(itemStack.getSubNbt(String.valueOf(i)));
+            }
+
+            toolBeltInventory.readNbtList(nbtList);
+        }
+
+        return toolBeltInventory;
+    }
+
+    public static ToolBeltInventory tryAddToExistingStack(ItemStack itemStack, ToolBeltInventory toolBeltInventory, PlayerEntity player) {
+        //System.out.println("Attempting to add " + itemStack + " to Toolbelt");
+        boolean success = false;
+        for(int i = 0; i < 9; i++) {
+            ItemStack toolbeltItem = toolBeltInventory.getStack(i);
+            if(toolbeltItem.getItem() == itemStack.getItem() && !itemStack.isEmpty()) {
+                if(toolbeltItem.getMaxCount() != toolbeltItem.getCount() && toolbeltItem.getMaxCount() >= toolbeltItem.getCount() + itemStack.getCount()) {
+                    toolbeltItem.increment(itemStack.getCount());
+                    itemStack.decrement(toolbeltItem.getCount() - itemStack.getCount());
+                    success = true;
+                    //System.out.println("Added to " + toolbeltItem + " in toolbelt slot " + i);
+                } else {
+                    //System.out.println("Failed count check");
+                    //System.out.println((toolbeltItem.getCount() + itemStack.getCount()));
+                }
+            }
+        }
+        if(success && !player.getWorld().isClient) {
+            player.getWorld().playSound(null, player.getBlockPos(), MilkevsEssentials.TOOLBELT_PICKUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            System.out.println("Attempted Sound: " + MilkevsEssentials.TOOLBELT_PICKUP.getId());
+        }
+        return toolBeltInventory;
+    }
+
+    //Updates old custom NBT storage logic into the new SimpleInventory implementation
+    private static ItemStack updateOldItem(ItemStack toolBelt) {
+        ToolBeltInventory toolBeltInventory = new ToolBeltInventory();
+        for(int i = 0; i < 9; i++) {
+
+            //init variable holding itemstack that is currently IN OLD TOOLBELT NBT
+            ItemStack oldItem = ItemStack.EMPTY;
+            //grab identifier of item IN OLD TOOLBELT NBT
+            Identifier oldItemID = makeIdentifier(toolBelt, i);
+            //grab nbt of item IN OLD TOOLBELT NBT
+            NbtElement oldItemNbt = toolBelt.getOrCreateNbt().get("Slot_" + i + "_nbt");
+            //grab count of item IN OLD TOOLBELT NBT
+            int count = 0;
+            assert toolBelt.getNbt() != null;
+            if(toolBelt.getNbt().contains("Slot_" + i + "_count")) {
+                count = Integer.parseInt(Objects.requireNonNull(toolBelt.getOrCreateNbt().get("Slot_" + i + "_count")).asString());
+            }
+
+
+            if (!oldItemID.equals(new Identifier("minecraft", "air"))) {
+                oldItem = new ItemStack(Registries.ITEM.get(oldItemID), count);
+                if (oldItemNbt != null) {
+                    oldItem.setNbt((NbtCompound) oldItemNbt);
+                }
+            }
+            toolBeltInventory.setStack(i, oldItem);
+        }
+        toolBelt.setNbt(new NbtCompound());
+        save(toolBeltInventory, toolBelt);
+        System.out.println("Old milkevsessentials:toolbelt has been successfully updated to new save format");
+        System.out.println(toolBeltInventory);
+        return toolBelt;
+    }
+
+    //Old custom NBT based code
+    /*
     public void swapItems(ServerPlayerEntity player, ItemStack toolBelt) {
 
         PlayerInventory inventory = player.getInventory();
@@ -34,18 +128,6 @@ public class ToolBelt extends CharmWithTooltip {
         //System.out.println(ID);
 
         NbtCompound toolBeltNbt = toolBelt.getOrCreateNbt();
-
-        /*
-        Item item = player.getInventory().getStack(0).getItem();
-        if(item != null) {
-            int count = player.getInventory().getStack(0).getCount();
-            ItemStack newStack = item.getDefaultStack();
-            newStack.setCount(count);
-            System.out.println("ITEM: " + newStack);
-            System.out.println("ITEM COUNT: " + count);
-        } else {
-            System.out.println("ITEM WAS NULL");
-            */
 
         for(int i = 0; i < 9; i++) {
             //init variable holding itemstack that is currently in the belt, and will be moved out of the belt at the end
@@ -99,8 +181,10 @@ public class ToolBelt extends CharmWithTooltip {
             inventory.setStack(i, toHotbar);
         }
     }
+    */
 
-    private Identifier makeIdentifier(ItemStack toolBelt, int i) {
+    //Old custom NBT based code. Only used to update from old format
+    private static Identifier makeIdentifier(ItemStack toolBelt, int i) {
         String toolBeltItemIDString = "minecraft:air";
         if(toolBelt.getOrCreateNbt().contains("Slot_" + i + "_identifier")) {
             toolBeltItemIDString = toolBelt.getOrCreateNbt().get("Slot_" + i + "_identifier").toString();

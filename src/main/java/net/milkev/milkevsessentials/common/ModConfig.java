@@ -14,6 +14,8 @@ public class ModConfig implements ConfigData {
     //public boolean enableAmethystLauncher = false;
     @Comment("If Tool belt is enabled. Default: true")
     public boolean enableToolBelt = true;
+    @Comment("If Tool belt should pickup items when equipped. Priorities are: Fill stacks in hotbar, Fill stacks in toolbelt, Fill empty slots in hotbar, normal. Default: true) ")
+    public boolean enableToolBeltPickup = true;
     @Comment("If Instant Shield Blocking is enabled. Default: true")
     public boolean enableInstantShieldBlocking = true;
     @Comment("If holding shield up should negate fall damage. Default: false")

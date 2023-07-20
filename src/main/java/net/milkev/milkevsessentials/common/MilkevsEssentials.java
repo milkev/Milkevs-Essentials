@@ -57,7 +57,7 @@ public class MilkevsEssentials implements ModInitializer {
 		//AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
 		//Config registered in MilkevsEssentialsMixinCondition.java
 		ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-gi
+
 		if(config.enableExtendoGrips) {
 			DynamicDatapacks("extendo_grips");
 			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "extendo_grip_low"),

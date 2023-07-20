@@ -1,6 +1,10 @@
 package net.milkev.milkevsessentials.common.compat;
 
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.milkev.milkevsessentials.common.MilkevsEssentials;
+import net.milkev.milkevsessentials.common.ModConfig;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -10,9 +14,12 @@ import java.util.Set;
 
 public class MilkevsEssentialsMixinCondition implements IMixinConfigPlugin {
 
+    ModConfig config;
+
     @Override
     public void onLoad(String mixinPackage) {
-
+        AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
+        config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     }
 
     @Override
@@ -24,18 +31,17 @@ public class MilkevsEssentialsMixinCondition implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
 
         //System.out.println(mixinClassName);
-
-        if(mixinClassName.equalsIgnoreCase("net.milkev.milkevsessentials.common.mixins.OPGluttonyCharmMixinMealAPI")) {
-            if (FabricLoader.getInstance().isModLoaded("mealapi")) {
-                //System.out.println("Loading Meal API Mixin");
-                return true;
-            } else {
-                //System.out.println("Not loading Meal API Mixin");
-                return false;
-            }
-        }
-        //System.out.println("Loaded Mixin: " + mixinClassName);
-        return true;
+        final String id = "net.milkev.milkevsessentials.common.mixins.";
+        return switch (mixinClassName) {
+            case id + "FlightCharmMixin" -> config.enableFlightCharm;
+            case id + "GluttonyCharmMixin" -> config.gluttonyCharm || config.opGluttonyCharm;
+            case id + "OPGluttonyCharmMixin" -> config.opGluttonyCharm;
+            case id + "OPGluttonyCharmMixinMealAPI" -> FabricLoader.getInstance().isModLoaded("mealapi") && config.opGluttonyCharm;
+            case id + "ShieldMixin" -> config.enableInstantShieldBlocking || config.enableShieldBlocksFallDamage;
+            case id + "ToolbeltPickupMixin" -> config.enableToolBeltPickup && config.enableToolBelt;
+            default ->
+                    true;
+        };
     }
 
     @Override

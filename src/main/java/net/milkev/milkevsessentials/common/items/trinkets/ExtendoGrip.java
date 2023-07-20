@@ -1,7 +1,7 @@
 package net.milkev.milkevsessentials.common.items.trinkets;
 
+import com.github.creoii.creolib.api.registry.CEntityAttributes;
 import com.google.common.collect.Multimap;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.emi.trinkets.api.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -25,11 +25,11 @@ public class ExtendoGrip extends TrinketItem {
         var modifiers = super.getModifiers(stack, slot, entity, uuid);
 
         //+x block reach
-        modifiers.put(ReachEntityAttributes.REACH,
+        modifiers.put(CEntityAttributes.PLAYER_REACH_DISTANCE,
                 new EntityAttributeModifier(uuid, "milkevsessentials:reach", reach,
                         EntityAttributeModifier.Operation.ADDITION));
         //+x attack reach
-        modifiers.put(ReachEntityAttributes.ATTACK_RANGE,
+        modifiers.put(CEntityAttributes.GENERIC_ATTACK_RANGE,
                 new EntityAttributeModifier(uuid, "milkevsessentials:attack_reach", attack_reach,
                         EntityAttributeModifier.Operation.ADDITION));
 

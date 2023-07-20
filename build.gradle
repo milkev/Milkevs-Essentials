@@ -30,6 +30,13 @@ repositories {
 	maven { url "https://maven.shedaniel.me/" }
 	//Meal API
 	maven { url "https://api.modrinth.com/maven" }
+	//creolib
+	maven {
+		url = uri "https://api.modrinth.com/maven"
+		content {
+			includeGroup "maven.modrinth"
+		}
+	}
 }
 
 dependencies {
@@ -43,7 +50,7 @@ dependencies {
 	//fabric api
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	//this mod allows extendo grips to increase block reach and range
-	include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}")
+	//include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}")
 	//trinkets, to equip trinkets
 	modImplementation "dev.emi:trinkets:${project.trinkets_version}"
 	//cardinal components api bcus trinkets
@@ -55,6 +62,8 @@ dependencies {
 	}
 	//meal api
 	modApi "maven.modrinth:mealapi:${project.meal_api_version}"
+	//creolib
+	modImplementation "maven.modrinth:creo-lib:${project.creolib_version}"
 }
 
 processResources {

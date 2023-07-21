@@ -82,6 +82,7 @@ public class ToolBelt extends CharmWithTooltip {
                     } else {
                         itemStack.decrement(toolbeltItem.getMaxCount() - toolbeltItem.getCount());
                         toolbeltItem.setCount(toolbeltItem.getMaxCount());
+                        success = true;
 
                     }
                     //System.out.println("Added to " + toolbeltItem + " in toolbelt slot " + i);

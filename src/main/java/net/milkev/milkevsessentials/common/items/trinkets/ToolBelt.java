@@ -65,17 +65,26 @@ public class ToolBelt extends CharmWithTooltip {
         //System.out.println("Attempting to add " + itemStack + " to Toolbelt");
         boolean success = false;
         for(int i = 0; i < 9; i++) {
+
             ItemStack toolbeltItem = toolBeltInventory.getStack(i);
-            if(toolbeltItem.getItem() == itemStack.getItem() && !itemStack.isEmpty()) {
-                if(toolbeltItem.getMaxCount() != toolbeltItem.getCount() && toolbeltItem.getMaxCount() >= toolbeltItem.getCount() + itemStack.getCount()) {
-                    toolbeltItem.increment(itemStack.getCount());
-                    itemStack.decrement(toolbeltItem.getCount() - itemStack.getCount());
-                    success = true;
+
+            if(toolbeltItem.getItem() == itemStack.getItem()
+                    && !itemStack.isEmpty()
+                    && toolbeltItem.getMaxCount() != toolbeltItem.getCount()) {
+
+                    //if stacks add up to or less than max stack count
+                    if(toolbeltItem.getMaxCount() >= toolbeltItem.getCount() + itemStack.getCount()) {
+                        toolbeltItem.increment(itemStack.getCount());
+                        itemStack.decrement(toolbeltItem.getCount() - itemStack.getCount());
+                        success = true;
+
+                    //if stacks add up to more than max stack count
+                    } else {
+                        itemStack.decrement(toolbeltItem.getMaxCount() - toolbeltItem.getCount());
+                        toolbeltItem.setCount(toolbeltItem.getMaxCount());
+
+                    }
                     //System.out.println("Added to " + toolbeltItem + " in toolbelt slot " + i);
-                } else {
-                    //System.out.println("Failed count check");
-                    //System.out.println((toolbeltItem.getCount() + itemStack.getCount()));
-                }
             }
         }
         if(success && !player.getWorld().isClient) {

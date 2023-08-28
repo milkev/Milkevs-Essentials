@@ -1,7 +1,7 @@
 package net.milkev.milkevsessentials.common.items.trinkets;
 
 import com.google.common.collect.Multimap;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+//import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.emi.trinkets.api.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -19,6 +19,7 @@ public class ExtendoGrip extends TrinketItem {
         attack_reach = attack_reach_set;
     }
 
+    /*
     public Multimap<EntityAttribute, EntityAttributeModifier>
             getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid) {
 
@@ -35,4 +36,5 @@ public class ExtendoGrip extends TrinketItem {
 
         return modifiers;
     }
+     */
 }

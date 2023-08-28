@@ -58,7 +58,7 @@ public class MilkevsEssentials implements ModInitializer {
 		//Config registered in MilkevsEssentialsMixinCondition.java
 		ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
-		if(config.enableExtendoGrips) {
+		if(config.enableExtendoGrips && false) {
 			DynamicDatapacks("extendo_grips");
 			Registry.register(Registries.ITEM, new Identifier(MOD_ID, "extendo_grip_low"),
 					setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach, Rarity.UNCOMMON));

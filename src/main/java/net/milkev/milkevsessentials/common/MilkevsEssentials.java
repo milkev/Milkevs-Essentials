@@ -62,7 +62,7 @@ public class MilkevsEssentials implements ModInitializer {
 
 		if(config.enableExtendoGrips) {
 			DynamicDatapacks("extendo_grips");
-			if(config.itemDisableSetting) {
+			if(!config.itemDisableSetting) {
 				Registry.register(Registries.ITEM, new Identifier(MOD_ID, "extendo_grip_low"),
 						setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach, Rarity.UNCOMMON));
 				Registry.register(Registries.ITEM, new Identifier(MOD_ID, "extendo_grip_normal"),
@@ -74,7 +74,7 @@ public class MilkevsEssentials implements ModInitializer {
 		if(config.enableFlightCharm) {
 			FLIGHT_CHARM = new FlightCharm(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC));
 			DynamicDatapacks("flight_charm");
-			if(config.itemDisableSetting) {
+			if(!config.itemDisableSetting) {
 				Registry.register(Registries.ITEM, new Identifier(MOD_ID, "flight_charm"), FLIGHT_CHARM);
 			}
 		}
@@ -87,7 +87,7 @@ public class MilkevsEssentials implements ModInitializer {
 		if(config.enableToolBelt) {
 			TOOL_BELT = new ToolBelt(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON));
 			DynamicDatapacks("toolbelt");
-			if(config.itemDisableSetting) {
+			if(!config.itemDisableSetting) {
 				Registry.register(Registries.ITEM, new Identifier(MOD_ID, "toolbelt"), TOOL_BELT);
 				ToolBeltNetworking.init();
 				Registry.register(Registries.SOUND_EVENT, TOOLBELT_PICKUP_ID, TOOLBELT_PICKUP);
@@ -97,7 +97,7 @@ public class MilkevsEssentials implements ModInitializer {
 			DynamicDatapacks("milkevscustomrules");
 		}
 		if(config.rottenFleshToLeather) {
-			if(config.itemDisableSetting) {
+			if(!config.itemDisableSetting) {
 				CONDENSED_ROTTEN_FLESH = new Item(new FabricItemSettings().maxCount(64));
 				AddToGroup(ItemGroups.INGREDIENTS, CONDENSED_ROTTEN_FLESH);
 				Registry.register(Registries.ITEM, new Identifier(MOD_ID, "condensed_rotten_flesh"), CONDENSED_ROTTEN_FLESH);
@@ -105,14 +105,14 @@ public class MilkevsEssentials implements ModInitializer {
 			DynamicDatapacks("rottenfleshtoleather");
 		}
 		if(config.gluttonyCharm) {
-			if(config.itemDisableSetting) {
+			if(!config.itemDisableSetting) {
 				GLUTTONY_CHARM = new CharmWithTooltip(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE), "gluttony_charm.tooltip", "gluttony");
 				Registry.register(Registries.ITEM, new Identifier(MOD_ID, "gluttony_charm"), GLUTTONY_CHARM);
 			}
 			DynamicDatapacks("gluttony_charm");
 		}
 		if(config.opGluttonyCharm) {
-			if(config.itemDisableSetting) {
+			if(!config.itemDisableSetting) {
 				OP_GLUTTONY_CHARM = new CharmWithTooltip(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC), "op_gluttony_charm.tooltip", "gluttony");
 				Registry.register(Registries.ITEM, new Identifier(MOD_ID, "op_gluttony_charm"), OP_GLUTTONY_CHARM);
 			}

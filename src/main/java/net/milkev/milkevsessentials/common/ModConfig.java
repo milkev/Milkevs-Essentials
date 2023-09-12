@@ -6,6 +6,8 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
 @Config(name="milkevsessentials")
 public class ModConfig implements ConfigData {
+    @Comment("If disabling an item should remove it from the game. Default: true")
+    public boolean itemDisableSetting = true;
     @Comment("If Extendo Grips are enabled. Default: true")
     public boolean enableExtendoGrips = true;
     @Comment("If Flight Charm is enabled. Default: true")

@@ -2,7 +2,7 @@ package net.milkev.milkevsessentials.common.mixins;
 
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
-import io.github.foundationgames.mealapi.api.v0.PlayerFullnessUtil;
+//import io.github.foundationgames.mealapi.api.v0.PlayerFullnessUtil;
 import net.milkev.milkevsessentials.common.MilkevsEssentials;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +24,7 @@ public abstract class OPGluttonyCharmMixinMealAPI {
         TrinketComponent trinket = TrinketsApi.getTrinketComponent(playerEntity).get();
         if(trinket.isEquipped(MilkevsEssentials.OP_GLUTTONY_CHARM)) {
             if(playerEntity instanceof ServerPlayerEntity player) {
-                PlayerFullnessUtil.instance().addFullness(player, 1);
+                //PlayerFullnessUtil.instance().addFullness(player, 1);
             }
         }
     }

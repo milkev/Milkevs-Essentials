@@ -68,9 +68,29 @@ public class ToolBelt extends CharmWithTooltip {
 
             ItemStack toolbeltItem = toolBeltInventory.getStack(i);
 
+            System.out.println(toolbeltItem.getNbt());
+            System.out.println(itemStack.getNbt());
+
+            //if the toolbelt stack and itemstack have the same nbt data
+            boolean sameNbtorNoNbt = false;
+            if(itemStack.hasNbt() && toolbeltItem.hasNbt()) {
+                if(toolbeltItem.getNbt().equals(itemStack.getNbt())) {
+                    //if nbt matches
+                    sameNbtorNoNbt = true;
+                }
+            }  else if(!itemStack.hasNbt()) {
+                //if there is no nbt
+                sameNbtorNoNbt = true;
+            }
+
+                    //if items are the same item
             if(toolbeltItem.getItem() == itemStack.getItem()
+                    //if we are actually picking up something
                     && !itemStack.isEmpty()
-                    && toolbeltItem.getMaxCount() != toolbeltItem.getCount()) {
+                    //if toolbelt stack isnt full
+                    && toolbeltItem.getMaxCount() != toolbeltItem.getCount()
+                    //if the toolbelt stack and itemstack have the same nbt data, or if there is no nbt data
+                    && sameNbtorNoNbt) {
 
                     //if stacks add up to or less than max stack count
                     if(toolbeltItem.getMaxCount() >= toolbeltItem.getCount() + itemStack.getCount()) {
@@ -85,12 +105,12 @@ public class ToolBelt extends CharmWithTooltip {
                         success = true;
 
                     }
-                    //System.out.println("Added to " + toolbeltItem + " in toolbelt slot " + i);
+                    System.out.println("Added to " + toolbeltItem + " in toolbelt slot " + i);
             }
         }
         if(success && !player.getWorld().isClient) {
             player.getWorld().playSound(null, player.getBlockPos(), MilkevsEssentials.TOOLBELT_PICKUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
-            System.out.println("Attempted Sound: " + MilkevsEssentials.TOOLBELT_PICKUP.getId());
+            //System.out.println("Attempted Sound: " + MilkevsEssentials.TOOLBELT_PICKUP.getId());
         }
         return toolBeltInventory;
     }
@@ -128,70 +148,6 @@ public class ToolBelt extends CharmWithTooltip {
         System.out.println(toolBeltInventory);
         return toolBelt;
     }
-
-    //Old custom NBT based code
-    /*
-    public void swapItems(ServerPlayerEntity player, ItemStack toolBelt) {
-
-        PlayerInventory inventory = player.getInventory();
-
-        //System.out.println(ID);
-
-        NbtCompound toolBeltNbt = toolBelt.getOrCreateNbt();
-
-        for(int i = 0; i < 9; i++) {
-            //init variable holding itemstack that is currently in the belt, and will be moved out of the belt at the end
-            ItemStack toHotbar = ItemStack.EMPTY;
-            //grab identifier
-            Identifier toolBeltItemID = makeIdentifier(toolBelt, i);
-            //grab nbt
-            NbtElement toolBeltItemNbt = toolBelt.getOrCreateNbt().get("Slot_" + i + "_nbt");
-            //grab count
-            int count = 0;
-            assert toolBelt.getNbt() != null;
-            if(toolBelt.getNbt().contains("Slot_" + i + "_count")) {
-                count = Integer.parseInt(toolBelt.getOrCreateNbt().get("Slot_" + i + "_count").asString());
-            }
-            if (!toolBeltItemID.equals(new Identifier("minecraft", "air"))) {
-                //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": " + toolBeltItemID + ", COUNT: " + count);
-                toHotbar = new ItemStack(Registries.ITEM.get(toolBeltItemID), count);
-                if (toolBeltItemNbt != null) {
-                    //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": NBT: " + toolBeltItemNbt);
-                    toHotbar.setNbt((NbtCompound) toolBeltItemNbt);
-                } else {
-                    //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": NBT EMPTY");
-                }
-            } else {
-                //System.out.println("ITEM TO GO TO HOTBAR, SLOT " + i + ": EMPTY");
-            }
-
-            //sus
-            ItemStack itemStack = player.getInventory().getStack(i);
-            NbtElement itemNbt = itemStack.getNbt();
-            //get ID of item we want to put into the toolbelt
-            Identifier ID = Registries.ITEM.getId(player.getInventory().getStack(i).getItem());
-
-            if (itemStack != ItemStack.EMPTY) {
-                if (itemNbt != null) {
-                    toolBeltNbt.put("Slot_" + i + "_nbt", itemNbt);
-                    //System.out.println("SETTING TOOLBELT NBT, SLOT " + i + ": " + itemNbt);
-                } else {
-                    //System.out.println("SETTING TOOLBELT NBT: ITEM HAS NO NBT DATA");
-                    toolBeltNbt.remove("Slot_" + i + "_nbt");
-                }
-                toolBeltNbt.putString("Slot_" + i + "_identifier", String.valueOf(ID));
-                toolBeltNbt.putInt("Slot_" + i + "_count", itemStack.getCount());
-                //System.out.println("SETTING TOOLBELT ITEM, SLOT " + i + ": " + ID + ", COUNT: " + itemStack.getCount());
-            } else {
-                //if nothing to put into toolbelt, remove slot nbt data
-                toolBeltNbt.remove("Slot_" + i + "_identifier");
-                toolBeltNbt.remove("Slot_" + i + "_count");
-                toolBeltNbt.remove("Slot_" + i + "_nbt");
-            }
-            inventory.setStack(i, toHotbar);
-        }
-    }
-    */
 
     //Old custom NBT based code. Only used to update from old format
     private static Identifier makeIdentifier(ItemStack toolBelt, int i) {

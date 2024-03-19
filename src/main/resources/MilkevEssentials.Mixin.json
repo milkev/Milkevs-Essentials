@@ -5,7 +5,6 @@
   "compatibilityLevel": "JAVA_16",
   "plugin": "net.milkev.milkevsessentials.common.compat.MilkevsEssentialsMixinCondition",
   "mixins": [
-    "FlightCharmMixin",
     "ShieldMixin",
     "GluttonyCharmMixin",
     "OPGluttonyCharmMixin",

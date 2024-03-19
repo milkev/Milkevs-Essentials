@@ -1,5 +1,7 @@
 package net.milkev.milkevsessentials.common;
 
+import io.github.ladysnake.pal.AbilitySource;
+import io.github.ladysnake.pal.Pal;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -30,6 +32,8 @@ public class MilkevsEssentials implements ModInitializer {
 	public static final String MOD_ID = "milkevsessentials";
 
 	public static FlightCharm FLIGHT_CHARM = null;
+	public static Identifier FLIGHT_CHARM_FLIGHT_ID =new Identifier(MOD_ID + "milkevsessentials_flight_charm");
+	public static AbilitySource FLIGHT_CHARM_FLIGHT_ABILITYSOURCE = Pal.getAbilitySource(FLIGHT_CHARM_FLIGHT_ID);
 
 	public static ToolBelt TOOL_BELT = null;
 

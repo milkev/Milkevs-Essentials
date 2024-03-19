@@ -18,7 +18,6 @@ public class CharmWithTooltip extends TrinketItem {
 
     Text itemTooltip;
     Text slotType;
-    Text itemTooltipTwo;
 
     public CharmWithTooltip(Settings settings, String itemTooltipID, String slotTypeID) {
         super(settings);
@@ -29,20 +28,18 @@ public class CharmWithTooltip extends TrinketItem {
         });
     }
 
-    public CharmWithTooltip(Settings settings, String itemTooltipID, String itemToolTipTwoID, String slotTypeID) {
-        super(settings);
-        itemTooltip = Text.translatable("item.milkevsessentials." + itemTooltipID);
-        itemTooltipTwo = Text.translatable("item.milkevsessentials." + itemToolTipTwoID);
-        slotType = Text.translatable("item.milkevsessentials.slot." + slotTypeID);
-    }
-
     @Override
     public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
 
         tooltip.add(slotType);
-        tooltip.add(itemTooltip);
-        if(itemTooltipTwo != null) {
-            tooltip.add(itemTooltipTwo);
+        String multilineTooltip = itemTooltip.getString();
+        if(multilineTooltip.contains("\n")) {
+            String[] multilineTooltipArray = multilineTooltip.split("\n");
+            for(int i = 0; i < multilineTooltipArray.length; i++) {
+                tooltip.add(Text.of(multilineTooltipArray[i]));
+            }
+        } else {
+            tooltip.add(itemTooltip);
         }
 
     }

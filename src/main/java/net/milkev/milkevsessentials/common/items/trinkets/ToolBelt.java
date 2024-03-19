@@ -68,9 +68,6 @@ public class ToolBelt extends CharmWithTooltip {
 
             ItemStack toolbeltItem = toolBeltInventory.getStack(i);
 
-            System.out.println(toolbeltItem.getNbt());
-            System.out.println(itemStack.getNbt());
-
             //if the toolbelt stack and itemstack have the same nbt data
             boolean sameNbtorNoNbt = false;
             if(itemStack.hasNbt() && toolbeltItem.hasNbt()) {
@@ -105,7 +102,7 @@ public class ToolBelt extends CharmWithTooltip {
                         success = true;
 
                     }
-                    System.out.println("Added to " + toolbeltItem + " in toolbelt slot " + i);
+                    //System.out.println("Added to " + toolbeltItem + " in toolbelt slot " + i);
             }
         }
         if(success && !player.getWorld().isClient) {

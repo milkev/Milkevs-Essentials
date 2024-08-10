@@ -8,7 +8,6 @@
     "ShieldMixin",
     "GluttonyCharmMixin",
     "OPGluttonyCharmMixin",
-    "OPGluttonyCharmMixinMealAPI",
     "ToolbeltPickupMixin"
   ],
   "client": [

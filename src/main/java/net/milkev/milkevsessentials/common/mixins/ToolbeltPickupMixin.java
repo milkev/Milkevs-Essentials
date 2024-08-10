@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(PlayerInventory.class)
 public abstract class ToolbeltPickupMixin {
 
+    /*
     @Mutable
     @Final
     @Shadow
@@ -59,7 +60,7 @@ public abstract class ToolbeltPickupMixin {
                 ToolBelt.save(ToolBelt.tryAddToExistingStack(itemStack, ToolBelt.load(toolBelt), player), toolBelt);
             }
         }
-    }
+    }*/
 
     /*
     public void triggerItemPickedUpByEntityCriteria(ItemEntity itemEntity) {

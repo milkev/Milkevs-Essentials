@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 public class AmethystShotInit {
 
-    public static final Identifier PacketID = new Identifier(MilkevsEssentials.MOD_ID, "spawn_packet");
+    public static final Identifier PacketID = Identifier.of(MilkevsEssentials.MOD_ID, "spawn_packet");
 
     public static void init() {
 

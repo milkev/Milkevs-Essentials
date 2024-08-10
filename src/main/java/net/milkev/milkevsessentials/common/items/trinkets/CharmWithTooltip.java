@@ -5,10 +5,10 @@ import dev.emi.trinkets.api.TrinketItem;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.milkev.milkevsessentials.common.MilkevsEssentials;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
@@ -29,7 +29,7 @@ public class CharmWithTooltip extends TrinketItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+    public void appendTooltip(ItemStack itemStack, TooltipContext tooltipContext, List<Text> tooltip, TooltipType tooltipType)  {
 
         tooltip.add(slotType);
         String multilineTooltip = itemTooltip.getString();

@@ -2,6 +2,8 @@ package net.milkev.milkevsessentials.common.items.trinkets;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.milkev.milkevsessentials.common.MilkevsEssentials;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -29,134 +31,75 @@ public class ToolBelt extends CharmWithTooltip {
         });
     }
 
-    public static void save(ToolBeltInventory toolBeltInventory, ItemStack itemStack) {
-        for(int i = 0; i < 9; i++) {
-            NbtCompound inventoryAsNbt = toolBeltInventory.getStack(i).writeNbt(new NbtCompound());
-            //System.out.println(i);
-            //System.out.println("Saving from: " + toolBeltInventory.getStack(i));
-            //System.out.println("Saving as: " + inventoryAsNbt);
-            itemStack.setSubNbt(String.valueOf(i), inventoryAsNbt);
-        }
+    private static ItemStack n() {
+        ItemStack stack = new ItemStack(Registries.ITEM.get(Identifier.of("minecraft:stick")));
+        stack.setCount(1);
+        stack.set(DataComponentTypes.CUSTOM_NAME, Text.literal("empty_slot"));
+        return stack;
     }
 
-    public static ToolBeltInventory load(ItemStack itemStack) {
+    public static void swap(ItemStack toolbelt, ServerPlayerEntity playerEntity) {
 
-        ToolBeltInventory toolBeltInventory = new ToolBeltInventory();
-
-        if(itemStack.hasNbt()) {
-
-            if(itemStack.getNbt().asString().contains("Slot_")) {
-                itemStack = updateOldItem(itemStack);
-            }
-
-            NbtList nbtList = new NbtList();
-            for (int i = 0; i < 9; i++) {
-                //System.out.println("Nbt of " + i + ": " + itemStack.getNbt());
-                nbtList.add(itemStack.getSubNbt(String.valueOf(i)));
-            }
-
-            toolBeltInventory.readNbtList(nbtList);
-        }
-
-        return toolBeltInventory;
-    }
-
-    public static ToolBeltInventory tryAddToExistingStack(ItemStack itemStack, ToolBeltInventory toolBeltInventory, PlayerEntity player) {
-        //System.out.println("Attempting to add " + itemStack + " to Toolbelt");
-        boolean success = false;
-        for(int i = 0; i < 9; i++) {
-
-            ItemStack toolbeltItem = toolBeltInventory.getStack(i);
-
-            //if the toolbelt stack and itemstack have the same nbt data
-            boolean sameNbtorNoNbt = false;
-            if(itemStack.hasNbt() && toolbeltItem.hasNbt()) {
-                if(toolbeltItem.getNbt().equals(itemStack.getNbt())) {
-                    //if nbt matches
-                    sameNbtorNoNbt = true;
-                }
-            }  else if(!itemStack.hasNbt()) {
-                //if there is no nbt
-                sameNbtorNoNbt = true;
-            }
-
-                    //if items are the same item
-            if(toolbeltItem.getItem() == itemStack.getItem()
-                    //if we are actually picking up something
-                    && !itemStack.isEmpty()
-                    //if toolbelt stack isnt full
-                    && toolbeltItem.getMaxCount() != toolbeltItem.getCount()
-                    //if the toolbelt stack and itemstack have the same nbt data, or if there is no nbt data
-                    && sameNbtorNoNbt) {
-
-                    //if stacks add up to or less than max stack count
-                    if(toolbeltItem.getMaxCount() >= toolbeltItem.getCount() + itemStack.getCount()) {
-                        toolbeltItem.increment(itemStack.getCount());
-                        itemStack.decrement(toolbeltItem.getCount() - itemStack.getCount());
-                        success = true;
-
-                    //if stacks add up to more than max stack count
-                    } else {
-                        itemStack.decrement(toolbeltItem.getMaxCount() - toolbeltItem.getCount());
-                        toolbeltItem.setCount(toolbeltItem.getMaxCount());
-                        success = true;
-
-                    }
-                    //System.out.println("Added to " + toolbeltItem + " in toolbelt slot " + i);
-            }
-        }
-        if(success && !player.getWorld().isClient) {
-            player.getWorld().playSound(null, player.getBlockPos(), MilkevsEssentials.TOOLBELT_PICKUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
-            //System.out.println("Attempted Sound: " + MilkevsEssentials.TOOLBELT_PICKUP.getId());
-        }
-        return toolBeltInventory;
-    }
-
-    //Updates old custom NBT storage logic into the new SimpleInventory implementation
-    private static ItemStack updateOldItem(ItemStack toolBelt) {
-        ToolBeltInventory toolBeltInventory = new ToolBeltInventory();
-        for(int i = 0; i < 9; i++) {
-
-            //init variable holding itemstack that is currently IN OLD TOOLBELT NBT
-            ItemStack oldItem = ItemStack.EMPTY;
-            //grab identifier of item IN OLD TOOLBELT NBT
-            Identifier oldItemID = makeIdentifier(toolBelt, i);
-            //grab nbt of item IN OLD TOOLBELT NBT
-            NbtElement oldItemNbt = toolBelt.getOrCreateNbt().get("Slot_" + i + "_nbt");
-            //grab count of item IN OLD TOOLBELT NBT
-            int count = 0;
-            assert toolBelt.getNbt() != null;
-            if(toolBelt.getNbt().contains("Slot_" + i + "_count")) {
-                count = Integer.parseInt(Objects.requireNonNull(toolBelt.getOrCreateNbt().get("Slot_" + i + "_count")).asString());
-            }
+        ToolbeltComponent toolbeltComponent = toolbelt.getOrDefault(MilkevsEssentials.TOOLBELT_COMPONENT, new ToolbeltComponent(n(),n(),n(),n(),n(),n(),n(),n(),n()));
 
 
-            if (!oldItemID.equals(new Identifier("minecraft", "air"))) {
-                oldItem = new ItemStack(Registries.ITEM.get(oldItemID), count);
-                if (oldItemNbt != null) {
-                    oldItem.setNbt((NbtCompound) oldItemNbt);
-                }
-            }
-            toolBeltInventory.setStack(i, oldItem);
-        }
-        toolBelt.setNbt(new NbtCompound());
-        save(toolBeltInventory, toolBelt);
-        System.out.println("Old milkevsessentials:toolbelt has been successfully updated to new save format");
-        System.out.println(toolBeltInventory);
-        return toolBelt;
-    }
+        ItemStack toPlayerInventory = toolbeltComponent.slot1();
+        if(Objects.equals(toPlayerInventory.get(DataComponentTypes.CUSTOM_NAME), Text.literal("empty_slot"))) toPlayerInventory = ItemStack.EMPTY;
+        ItemStack toToolbeltInventory1 = playerEntity.getInventory().getStack(0);
+        if(toToolbeltInventory1 == ItemStack.EMPTY) toToolbeltInventory1 = n();
+        playerEntity.getInventory().setStack(0, toPlayerInventory);
 
-    //Old custom NBT based code. Only used to update from old format
-    private static Identifier makeIdentifier(ItemStack toolBelt, int i) {
-        String toolBeltItemIDString = "minecraft:air";
-        if(toolBelt.getOrCreateNbt().contains("Slot_" + i + "_identifier")) {
-            toolBeltItemIDString = toolBelt.getOrCreateNbt().get("Slot_" + i + "_identifier").toString();
-        }
-        String toolBeltItemIDMOD_ID = toolBeltItemIDString.substring(1,toolBeltItemIDString.indexOf(":"));
-        //System.out.println("MODID OF ITEM TO GO TO HOTBAR: " + toolBeltItemIDMOD_ID);
-        String toolBeltItemIDNamespace = toolBeltItemIDString.substring(toolBeltItemIDString.indexOf(":")+1, toolBeltItemIDString.length()-1);
-        //System.out.println("NAMESPACE OF ITEM TO GO TO HOTBAR: " + toolBeltItemIDNamespace);
-        return new Identifier(toolBeltItemIDMOD_ID, toolBeltItemIDNamespace);
+        toPlayerInventory = toolbeltComponent.slot2();
+        if(Objects.equals(toPlayerInventory.get(DataComponentTypes.CUSTOM_NAME), Text.literal("empty_slot"))) toPlayerInventory = ItemStack.EMPTY;
+        ItemStack toToolbeltInventory2 = playerEntity.getInventory().getStack(1);
+        if(toToolbeltInventory2 == ItemStack.EMPTY) toToolbeltInventory2 = n();
+        playerEntity.getInventory().setStack(1, toPlayerInventory);
+
+        toPlayerInventory = toolbeltComponent.slot3();
+        if(Objects.equals(toPlayerInventory.get(DataComponentTypes.CUSTOM_NAME), Text.literal("empty_slot"))) toPlayerInventory = ItemStack.EMPTY;
+        ItemStack toToolbeltInventory3 = playerEntity.getInventory().getStack(2);
+        if(toToolbeltInventory3 == ItemStack.EMPTY) toToolbeltInventory3 = n();
+        playerEntity.getInventory().setStack(2, toPlayerInventory);
+
+        toPlayerInventory = toolbeltComponent.slot4();
+        if(Objects.equals(toPlayerInventory.get(DataComponentTypes.CUSTOM_NAME), Text.literal("empty_slot"))) toPlayerInventory = ItemStack.EMPTY;
+        ItemStack toToolbeltInventory4 = playerEntity.getInventory().getStack(3);
+        if(toToolbeltInventory4 == ItemStack.EMPTY) toToolbeltInventory4 = n();
+        playerEntity.getInventory().setStack(3, toPlayerInventory);
+
+        toPlayerInventory = toolbeltComponent.slot5();
+        if(Objects.equals(toPlayerInventory.get(DataComponentTypes.CUSTOM_NAME), Text.literal("empty_slot"))) toPlayerInventory = ItemStack.EMPTY;
+        ItemStack toToolbeltInventory5 = playerEntity.getInventory().getStack(4);
+        if(toToolbeltInventory5 == ItemStack.EMPTY) toToolbeltInventory5 = n();
+        playerEntity.getInventory().setStack(4, toPlayerInventory);
+
+        toPlayerInventory = toolbeltComponent.slot6();
+        if(Objects.equals(toPlayerInventory.get(DataComponentTypes.CUSTOM_NAME), Text.literal("empty_slot"))) toPlayerInventory = ItemStack.EMPTY;
+        ItemStack toToolbeltInventory6 = playerEntity.getInventory().getStack(5);
+        if(toToolbeltInventory6 == ItemStack.EMPTY) toToolbeltInventory6 = n();
+        playerEntity.getInventory().setStack(5, toPlayerInventory);
+
+        toPlayerInventory = toolbeltComponent.slot7();
+        if(Objects.equals(toPlayerInventory.get(DataComponentTypes.CUSTOM_NAME), Text.literal("empty_slot"))) toPlayerInventory = ItemStack.EMPTY;
+        ItemStack toToolbeltInventory7 = playerEntity.getInventory().getStack(6);
+        if(toToolbeltInventory7 == ItemStack.EMPTY) toToolbeltInventory7 = n();
+        playerEntity.getInventory().setStack(6, toPlayerInventory);
+
+        toPlayerInventory = toolbeltComponent.slot8();
+        if(Objects.equals(toPlayerInventory.get(DataComponentTypes.CUSTOM_NAME), Text.literal("empty_slot"))) toPlayerInventory = ItemStack.EMPTY;
+        ItemStack toToolbeltInventory8 = playerEntity.getInventory().getStack(7);
+        if(toToolbeltInventory8 == ItemStack.EMPTY) toToolbeltInventory8 = n();
+        playerEntity.getInventory().setStack(7, toPlayerInventory);
+
+        toPlayerInventory = toolbeltComponent.slot9();
+        if(Objects.equals(toPlayerInventory.get(DataComponentTypes.CUSTOM_NAME), Text.literal("empty_slot"))) toPlayerInventory = ItemStack.EMPTY;
+        ItemStack toToolbeltInventory9 = playerEntity.getInventory().getStack(8);
+        if(toToolbeltInventory9 == ItemStack.EMPTY) toToolbeltInventory9 = n();
+        playerEntity.getInventory().setStack(8, toPlayerInventory);
+        
+
+        toolbelt.set(MilkevsEssentials.TOOLBELT_COMPONENT, new ToolbeltComponent(toToolbeltInventory1, toToolbeltInventory2, toToolbeltInventory3, toToolbeltInventory4, toToolbeltInventory5, toToolbeltInventory6, toToolbeltInventory7, toToolbeltInventory8, toToolbeltInventory9));
+
     }
 
 

@@ -3,10 +3,10 @@ package net.milkev.milkevsessentials.common.network;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.milkev.milkevsessentials.common.MilkevsEssentials;
 import net.milkev.milkevsessentials.common.items.trinkets.ToolBelt;
-import net.milkev.milkevsessentials.common.items.trinkets.ToolBeltInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
@@ -18,14 +18,17 @@ import java.util.Optional;
 
 public class ToolBeltNetworking {
 
-    public static Identifier USE_TOOLBELT = new Identifier(MilkevsEssentials.MOD_ID, "use_toolbelt");
+    public static Identifier USE_TOOLBELT = Identifier.of(MilkevsEssentials.MOD_ID, "use_toolbelt");
 
     public static void init() {
         //System.out.println("Milkevs Essentials: Tool Belt Networking Initialized");
-        ServerPlayNetworking.registerGlobalReceiver(USE_TOOLBELT, ToolBeltNetworking::recieveUseToolBeltPacket);
+        PayloadTypeRegistry.playC2S().register(ToolBeltPacket.PACKET_ID, ToolBeltPacket.PACKET_CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(ToolBeltPacket.PACKET_ID, ((payload, context) -> {
+            recieveUseToolBeltPacket(context.player());
+        }));
     }
 
-    private static void recieveUseToolBeltPacket(MinecraftServer minecraftServer, ServerPlayerEntity serverPlayerEntity, ServerPlayNetworkHandler serverPlayNetworkHandler, PacketByteBuf packetByteBuf, PacketSender packetSender) {
+    private static void recieveUseToolBeltPacket(ServerPlayerEntity serverPlayerEntity) {
 
         //System.out.println("recieve use tool belt packet called!");
         Optional<TrinketComponent> trinketComponent = TrinketsApi.getTrinketComponent(serverPlayerEntity);
@@ -35,11 +38,7 @@ public class ToolBeltNetworking {
 
                 ItemStack toolBelt = getToolBeltItemStack(trinketComponent);
 
-                ToolBeltInventory toolBeltInventory = ToolBelt.load(toolBelt);
-
-                toolBeltInventory.swapItems(serverPlayerEntity, toolBelt);
-
-                ToolBelt.save(toolBeltInventory, toolBelt);
+                ToolBelt.swap(toolBelt, serverPlayerEntity);
 
             } else {
                 //System.out.println("toolbelt is not equipped!");

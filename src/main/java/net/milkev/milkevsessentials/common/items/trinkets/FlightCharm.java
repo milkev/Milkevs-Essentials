@@ -6,7 +6,6 @@ import dev.emi.trinkets.api.TrinketsApi;
 import io.github.ladysnake.pal.VanillaAbilities;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.milkev.milkevsessentials.common.MilkevsEssentials;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;

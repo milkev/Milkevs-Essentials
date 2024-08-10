@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -43,8 +43,6 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	//fabric api
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	//this mod allows extendo grips to increase block reach and range
-	include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}")
 	//trinkets, to equip trinkets
 	modImplementation "dev.emi:trinkets:${project.trinkets_version}"
 	//cardinal components api bcus trinkets
@@ -57,8 +55,6 @@ dependencies {
 	//player ability lib
 	modImplementation "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
 	include "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
-	//meal api
-	modApi "maven.modrinth:mealapi:${project.meal_api_version}"
 }
 
 processResources {

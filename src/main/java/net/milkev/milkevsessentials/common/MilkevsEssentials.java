@@ -6,14 +6,17 @@ import io.github.ladysnake.pal.AbilitySource;
 import io.github.ladysnake.pal.Pal;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.milkev.milkevsessentials.common.items.trinkets.*;
 import net.milkev.milkevsessentials.common.network.ToolBeltNetworking;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.ContainerComponent;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -153,10 +156,14 @@ public class MilkevsEssentials implements ModInitializer {
 	}
 
 	public void DynamicDatapacks(String datapackName) {
+
+		ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of(MOD_ID, datapackName), FabricLoader.getInstance().getModContainer(MOD_ID).get(), ResourcePackActivationType.ALWAYS_ENABLED);
+		
+		/*
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
 			var added = ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of(MOD_ID, datapackName), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
 		});
-
+		*/
 		//System.out.println("Datapack Added: " + datapackName);
 	}
 

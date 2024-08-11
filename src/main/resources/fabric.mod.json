@@ -33,7 +33,7 @@
     "fabricloader": ">=0.15.11",
     "fabric": "*",
     "fabric-key-binding-api-v1": "*",
-    "minecraft": "1.21",
+    "minecraft": "1.21.x",
     "trinkets": ">=3.10.0",
     "cloth-config2": ">=15.0.128"
   },

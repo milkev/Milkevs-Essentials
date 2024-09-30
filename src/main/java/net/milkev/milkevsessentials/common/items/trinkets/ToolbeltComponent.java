@@ -1,25 +1,32 @@
 package net.milkev.milkevsessentials.common.items.trinkets;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 
 import java.util.List;
 
-public record ToolbeltComponent(ItemStack slot1, ItemStack slot2, ItemStack slot3, ItemStack slot4, ItemStack slot5, ItemStack slot6, ItemStack slot7, ItemStack slot8, ItemStack slot9) {
-
-    public static final Codec<ToolbeltComponent> CODEC = RecordCodecBuilder.create( builder -> {
-        return builder.group(
-                ItemStack.CODEC.fieldOf("slot1").forGetter(ToolbeltComponent::slot1),
-                ItemStack.CODEC.fieldOf("slot2").forGetter(ToolbeltComponent::slot2),
-                ItemStack.CODEC.fieldOf("slot3").forGetter(ToolbeltComponent::slot3),
-                ItemStack.CODEC.fieldOf("slot4").forGetter(ToolbeltComponent::slot4),
-                ItemStack.CODEC.fieldOf("slot5").forGetter(ToolbeltComponent::slot5),
-                ItemStack.CODEC.fieldOf("slot6").forGetter(ToolbeltComponent::slot6),
-                ItemStack.CODEC.fieldOf("slot7").forGetter(ToolbeltComponent::slot7),
-                ItemStack.CODEC.fieldOf("slot8").forGetter(ToolbeltComponent::slot8),
-                ItemStack.CODEC.fieldOf("slot9").forGetter(ToolbeltComponent::slot9)
-        ).apply(builder, ToolbeltComponent::new);
-    });
+public final class ToolbeltComponent {
+    
+    public static final Codec<ToolbeltComponent> CODEC = ItemStack.OPTIONAL_CODEC.listOf()
+            .xmap(ToolbeltComponent::new, component -> component.simpleInventory.getHeldStacks());
+    
+    private final SimpleInventory simpleInventory;
+    
+    public ToolbeltComponent(SimpleInventory simpleInventory) {
+        this.simpleInventory = simpleInventory;
+    }
+    
+    public ToolbeltComponent(List<ItemStack> stacks) {
+        this.simpleInventory = new SimpleInventory(9);
+        for(int i = 0; i < 9; i++) {
+            this.simpleInventory.setStack(i, stacks.get(i));
+        }
+    }
+    
+    public SimpleInventory getSimpleInventory() {
+        return this.simpleInventory;
+    }
 }

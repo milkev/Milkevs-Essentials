@@ -19,6 +19,7 @@ import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.*;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -49,6 +50,7 @@ public class MilkevsEssentials implements ModInitializer {
 			Identifier.of(MOD_ID, "toolbelt_inventory"),
 			ComponentType.<ToolbeltComponent>builder().codec(ToolbeltComponent.CODEC).build()
 	);
+	public static final TagKey<Item> TOOLBELT_BLACKLIST = TagKey.of(RegistryKeys.ITEM, Identifier.of(MOD_ID, "toolbelt_blacklist"));
 
 
 

@@ -3,6 +3,7 @@
     "player"
   ],
   "slots": [
+    "head/face",
     "chest/tool",
     "offhand/charm",
     "legs/belt",

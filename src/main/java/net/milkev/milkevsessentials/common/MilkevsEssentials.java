@@ -17,10 +17,13 @@ import net.milkev.milkevsessentials.common.network.ToolBeltNetworking;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
@@ -53,6 +56,10 @@ public class MilkevsEssentials implements ModInitializer {
 
 	public static CharmWithTooltip GLUTTONY_CHARM = null;
 	public static CharmWithTooltip OP_GLUTTONY_CHARM = null;
+	
+	public static CharmWithTooltip ALCHEMICAL_STASIS_SOOTHER = null;
+	
+	public static final TagKey<StatusEffect> ALCHEMICAL_STASIS_SOOTHER_BLACKLIST = TagKey.of(RegistryKeys.STATUS_EFFECT, Identifier.of(MOD_ID, "alchemical_stasis_soother_blacklist"));
 
 	/*
 	public static final AmethystLauncher AMETHYST_LAUNCHER = new AmethystLauncher(new FabricItemSettings().maxCount(1).group(ItemGroup.COMBAT));
@@ -75,28 +82,34 @@ public class MilkevsEssentials implements ModInitializer {
 
 		if(config.enableExtendoGrips) {
 			DynamicDatapacks("extendo_grips");
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "extendo_grip_low"),
-					setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach, Rarity.UNCOMMON));
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "extendo_grip_normal"),
-					setExtendoGrips(config.extendoGripsNormalBlockReach, config.extendoGripsNormalAttackReach, Rarity.RARE));
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "extendo_grip_high"),
-					setExtendoGrips(config.extendoGripsHighBlockReach, config.extendoGripsHighAttackReach, Rarity.EPIC));
+			register("extendo_grip_low", 
+					setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach, Rarity.UNCOMMON),
+					ItemGroups.TOOLS);
+			register("extendo_grip_normal",
+					setExtendoGrips(config.extendoGripsNormalBlockReach, config.extendoGripsNormalAttackReach, Rarity.RARE),
+					ItemGroups.TOOLS);
+			register("extendo_grip_high",
+					setExtendoGrips(config.extendoGripsHighBlockReach, config.extendoGripsHighAttackReach, Rarity.EPIC),
+					ItemGroups.TOOLS);
 		} else if(!config.itemDisableSetting) {
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "extendo_grip_low"),
-					setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach, Rarity.UNCOMMON));
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "extendo_grip_normal"),
-					setExtendoGrips(config.extendoGripsNormalBlockReach, config.extendoGripsNormalAttackReach, Rarity.RARE));
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "extendo_grip_high"),
-					setExtendoGrips(config.extendoGripsHighBlockReach, config.extendoGripsHighAttackReach, Rarity.EPIC));
+			register("extendo_grip_low",
+					setExtendoGrips(config.extendoGripsLowBlockReach, config.extendoGripsLowAttackReach, Rarity.UNCOMMON),
+					ItemGroups.TOOLS);
+			register("extendo_grip_normal",
+					setExtendoGrips(config.extendoGripsNormalBlockReach, config.extendoGripsNormalAttackReach, Rarity.RARE),
+					ItemGroups.TOOLS);
+			register("extendo_grip_high",
+					setExtendoGrips(config.extendoGripsHighBlockReach, config.extendoGripsHighAttackReach, Rarity.EPIC),
+					ItemGroups.TOOLS);
 		}
 
 		if(config.enableFlightCharm) {
 			DynamicDatapacks("flight_charm");
 			FLIGHT_CHARM = new FlightCharm(new Item.Settings().maxCount(1).rarity(Rarity.EPIC));
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "flight_charm"), FLIGHT_CHARM);
+			register("flight_charm", FLIGHT_CHARM, ItemGroups.TOOLS);
 		} else if(!config.itemDisableSetting) {
 			FLIGHT_CHARM = new FlightCharm(new Item.Settings().maxCount(1).rarity(Rarity.EPIC));
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "flight_charm"), FLIGHT_CHARM);
+			register("flight_charm", FLIGHT_CHARM, ItemGroups.TOOLS);
 		}
 
 		/*
@@ -109,12 +122,12 @@ public class MilkevsEssentials implements ModInitializer {
 		if(config.enableToolBelt) {
 			DynamicDatapacks("toolbelt");
 			TOOL_BELT = new ToolBelt(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON));
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "toolbelt"), TOOL_BELT);
+			register("toolbelt", TOOL_BELT, ItemGroups.TOOLS);
 			ToolBeltNetworking.init();
 			Registry.register(Registries.SOUND_EVENT, TOOLBELT_PICKUP_ID, TOOLBELT_PICKUP);
 		} else if(!config.itemDisableSetting) {
 			TOOL_BELT = new ToolBelt(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON));
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "toolbelt"), TOOL_BELT);
+			register("toolbelt", TOOL_BELT, ItemGroups.TOOLS);
 			ToolBeltNetworking.init();
 			Registry.register(Registries.SOUND_EVENT, TOOLBELT_PICKUP_ID, TOOLBELT_PICKUP);
 		}
@@ -126,30 +139,37 @@ public class MilkevsEssentials implements ModInitializer {
 		if(config.rottenFleshToLeather) {
 			DynamicDatapacks("rottenfleshtoleather");
 			CONDENSED_ROTTEN_FLESH = new Item(new Item.Settings().maxCount(64));
-			AddToGroup(ItemGroups.INGREDIENTS, CONDENSED_ROTTEN_FLESH);
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "condensed_rotten_flesh"), CONDENSED_ROTTEN_FLESH);
+			register("condensed_rotten_flesh", CONDENSED_ROTTEN_FLESH, ItemGroups.INGREDIENTS);
 		} else if(!config.itemDisableSetting) {
 			CONDENSED_ROTTEN_FLESH = new Item(new Item.Settings().maxCount(64));
-			AddToGroup(ItemGroups.INGREDIENTS, CONDENSED_ROTTEN_FLESH);
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "condensed_rotten_flesh"), CONDENSED_ROTTEN_FLESH);
+			register("condensed_rotten_flesh", CONDENSED_ROTTEN_FLESH, ItemGroups.INGREDIENTS);
 		}
 
 		if(config.gluttonyCharm) {
 			DynamicDatapacks("gluttony_charm");
 			GLUTTONY_CHARM = new CharmWithTooltip(new Item.Settings().maxCount(1).rarity(Rarity.RARE), "gluttony_charm.tooltip", "gluttony");
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "gluttony_charm"), GLUTTONY_CHARM);
+			register("gluttony_charm", GLUTTONY_CHARM, ItemGroups.TOOLS);
 		} else if(!config.itemDisableSetting) {
 			GLUTTONY_CHARM = new CharmWithTooltip(new Item.Settings().maxCount(1).rarity(Rarity.RARE), "gluttony_charm.tooltip", "gluttony");
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "gluttony_charm"), GLUTTONY_CHARM);
+			register("gluttony_charm", GLUTTONY_CHARM, ItemGroups.TOOLS);
 		}
 
 		if(config.opGluttonyCharm) {
 			DynamicDatapacks("op_gluttony_charm");
 			OP_GLUTTONY_CHARM = new CharmWithTooltip(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), "op_gluttony_charm.tooltip", "gluttony");
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "op_gluttony_charm"), OP_GLUTTONY_CHARM);
+			register("op_gluttony_charm", OP_GLUTTONY_CHARM, ItemGroups.TOOLS);
 		} else if(!config.itemDisableSetting) {
 			OP_GLUTTONY_CHARM = new CharmWithTooltip(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), "op_gluttony_charm.tooltip", "gluttony");
-			Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "op_gluttony_charm"), OP_GLUTTONY_CHARM);
+			register("op_gluttony_charm", OP_GLUTTONY_CHARM, ItemGroups.TOOLS);
+		}
+		
+		if(config.alchemicalStasisSoother) {
+			DynamicDatapacks("alchemical_stasis_soother");
+			ALCHEMICAL_STASIS_SOOTHER = new CharmWithTooltip(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), "alchemical_stasis_soother_charm.tooltip", "face");
+			register( "alchemical_stasis_soother", ALCHEMICAL_STASIS_SOOTHER, ItemGroups.TOOLS);
+		} else if(!config.itemDisableSetting) {
+			ALCHEMICAL_STASIS_SOOTHER = new CharmWithTooltip(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), "alchemical_stasis_soother_charm.tooltip", "face");
+			register( "alchemical_stasis_soother", ALCHEMICAL_STASIS_SOOTHER, ItemGroups.TOOLS);
 		}
 
 		System.out.println(MOD_ID + " Initialized");
@@ -159,24 +179,25 @@ public class MilkevsEssentials implements ModInitializer {
 
 		ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of(MOD_ID, datapackName), FabricLoader.getInstance().getModContainer(MOD_ID).get(), ResourcePackActivationType.ALWAYS_ENABLED);
 		
-		/*
-		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
-			var added = ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of(MOD_ID, datapackName), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
-		});
-		*/
-		//System.out.println("Datapack Added: " + datapackName);
 	}
 
 	public ExtendoGrip setExtendoGrips(int reach, int attack_reach, Rarity rarity) {
-		ExtendoGrip grip = new ExtendoGrip(new Item.Settings().maxCount(1).rarity(rarity), reach, attack_reach);
-		AddToGroup(ItemGroups.TOOLS, grip);
-		return grip;
+        return new ExtendoGrip(new Item.Settings().maxCount(1).rarity(rarity), reach, attack_reach);
+	}
+	
+	public Identifier id(String id) {
+		return Identifier.of(MOD_ID, id);
 	}
 
 	public void AddToGroup(RegistryKey<ItemGroup> group, ItemConvertible item) {
 		ItemGroupEvents.modifyEntriesEvent(group).register(content -> {
 			content.add(item);
 		});
+	}
+	
+	public void register(String id, Item object, RegistryKey<ItemGroup> group) {
+		Registry.register(Registries.ITEM, id(id), object);
+		AddToGroup(group, object);
 	}
 
 

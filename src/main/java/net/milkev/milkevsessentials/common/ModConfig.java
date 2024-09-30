@@ -43,4 +43,14 @@ public class ModConfig implements ConfigData {
     public boolean gluttonyCharm = true;
     @Comment("If OP Gluttony Charm should be enabled. Default: true")
     public boolean opGluttonyCharm = true;
+    @Comment("If Alchemical Stasis Soother should be enabled. Default: true")
+    public boolean alchemicalStasisSoother = true;
+    @Comment("How often the Alchemical Stasis Soother should refresh effects in ticks. 1 second = 20 ticks. Default: 15")
+    public int alchemicalStasisSootherRefreshTimer = 15;
+    @Comment("If the Alchemical Stasis Soother should refresh effects shorter than the refresh timer. Default: true")
+    public boolean alchemicalStasisSootherRefreshesShortEffects = true;
+    @Comment("If the Alchemical Stasis Soother should prevent effects from being added to the player (commands, potions, mob attacks, beacons, food, etc). Default: true")
+    public boolean alchemicalStasisSootherPreventEffectAdd = true;
+    @Comment("If the Alchemical Stasis Soother should prevent effects from being forcibly removed from the player (commands, milk, etc). This does NOT stop effects from being removed by their timers ending. Timers will only be allowed to end if alchemicalStasisSootherRefreshesShortEffects is off and the effect has a duration below the refresh timer. Default: true")
+    public boolean alchemicalStasisSootherPreventEffectRemove = true;
 }

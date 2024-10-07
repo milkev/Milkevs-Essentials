@@ -1,0 +1,27 @@
+
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "## ",
+    "#Nn",
+    " ng"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:blaze_powder"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "n": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "milkevsessentials:alchemical_stasis_soother",
+    "count": 1
+  }
+}

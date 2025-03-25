@@ -18,6 +18,9 @@
 
   "environment": "*",
   "entrypoints": {
+    "fabric-datagen": [
+      "net.milkev.milkevsessentials.common.data.MilkevsEssentialsDataGenerator"
+    ],
     "main": [
       "net.milkev.milkevsessentials.common.MilkevsEssentials"
     ],
@@ -34,7 +37,7 @@
     "fabric": "*",
     "fabric-key-binding-api-v1": "*",
     "minecraft": "1.21.x",
-    "trinkets": ">=3.10.0",
+    "accessories": ">=1.1.0-beta.34+1.21.1",
     "cloth-config2": ">=15.0.128"
   },
   "suggests": {

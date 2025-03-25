@@ -1,8 +1,8 @@
 package net.milkev.milkevsessentials.common.mixins;
 
-import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;
+import io.wispforest.accessories.api.AccessoriesCapability;
 import net.milkev.milkevsessentials.common.MilkevsEssentials;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,10 +15,16 @@ public class GluttonyCharmMixin {
 
     @Inject(at = @At("RETURN"), method = "canConsume", cancellable = true)
     public void canConsume(boolean bl, CallbackInfoReturnable<Boolean> cir) {
-        TrinketComponent trinket = TrinketsApi.getTrinketComponent((PlayerEntity)(Object)this).get();
-        if(trinket.isEquipped(MilkevsEssentials.GLUTTONY_CHARM) || trinket.isEquipped(MilkevsEssentials.OP_GLUTTONY_CHARM)) {
-            bl = true;
-            cir.setReturnValue(true);
+        try {
+            LivingEntity livingEntity = (LivingEntity) (Object) this;
+
+            AccessoriesCapability accessoriesCapability = AccessoriesCapability.get(livingEntity);
+            if (accessoriesCapability.isEquipped(MilkevsEssentials.GLUTTONY_CHARM) || accessoriesCapability.isEquipped(MilkevsEssentials.OP_GLUTTONY_CHARM)) {
+                bl = true;
+                cir.setReturnValue(true);
+            }
+        }  catch(Exception e) {
+            //this is here incase accessoriesCapability produces null, which is intended by accessories, and just means that the entity we are working on cant have accessories equipped
         }
     }
 

@@ -27,7 +27,7 @@ import java.util.Objects;
 public class ToolBelt extends CharmWithTooltip {
 
     public ToolBelt(Settings settings) {
-        super(settings, "toolbelt.tooltip",  "toolbelt");
+        super(settings, "toolbelt.tooltip");
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {
             content.add(this);
         });
@@ -54,6 +54,4 @@ public class ToolBelt extends CharmWithTooltip {
         toolbelt.set(MilkevsEssentials.TOOLBELT_COMPONENT, new ToolbeltComponent(inventory));
 
     }
-
-
 }

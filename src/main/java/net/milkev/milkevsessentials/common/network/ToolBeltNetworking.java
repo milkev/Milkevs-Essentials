@@ -1,7 +1,6 @@
 package net.milkev.milkevsessentials.common.network;
 
-import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;
+import io.wispforest.accessories.api.AccessoriesCapability;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -31,30 +30,25 @@ public class ToolBeltNetworking {
     private static void recieveUseToolBeltPacket(ServerPlayerEntity serverPlayerEntity) {
 
         //System.out.println("recieve use tool belt packet called!");
-        Optional<TrinketComponent> trinketComponent = TrinketsApi.getTrinketComponent(serverPlayerEntity);
-        if(MilkevsEssentials.TOOL_BELT != null) {
-            if (trinketComponent.get().isEquipped(MilkevsEssentials.TOOL_BELT)) {
-                //System.out.println("toolbelt is equipped!");
+        
+        try {
+            AccessoriesCapability accessoriesCapability = AccessoriesCapability.get(serverPlayerEntity);
+            if (MilkevsEssentials.TOOL_BELT != null) {
+                if (accessoriesCapability.isEquipped(MilkevsEssentials.TOOL_BELT)) {
+                    //System.out.println("toolbelt is equipped!");
 
-                ItemStack toolBelt = getToolBeltItemStack(trinketComponent);
+                    ItemStack toolBelt = accessoriesCapability.getFirstEquipped(MilkevsEssentials.TOOL_BELT).stack();
 
-                ToolBelt.swap(toolBelt, serverPlayerEntity);
+                    ToolBelt.swap(toolBelt, serverPlayerEntity);
 
-            } else {
-                //System.out.println("toolbelt is not equipped!");
+                } else {
+                    //System.out.println("toolbelt is not equipped!");
+                }
             }
+        } catch(Exception e) {
+            //this is here incase accessoriesCapability produces null, which is intended by accessories, and just means that the entity we are working on cant have accessories equipped
         }
 
-    }
-
-    private static ItemStack getToolBeltItemStack(Optional<TrinketComponent> trinketComponent) {
-        for(int i = 0; i <trinketComponent.get().getAllEquipped().size(); i++) {
-            if(trinketComponent.get().getAllEquipped().get(i).getRight().isOf(MilkevsEssentials.TOOL_BELT)) {
-                return trinketComponent.get().getAllEquipped().get(i).getRight();
-            }
-        }
-        //technically unreachable in use case, but :shrug:
-        return ItemStack.EMPTY;
     }
 
 }

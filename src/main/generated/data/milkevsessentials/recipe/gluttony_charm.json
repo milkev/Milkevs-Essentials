@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:bread"
+    },
+    "B": {
+      "item": "minecraft:golden_carrot"
+    },
+    "C": {
+      "item": "minecraft:cooked_chicken"
+    },
+    "D": {
+      "item": "minecraft:cooked_beef"
+    },
+    "E": {
+      "item": "minecraft:golden_apple"
+    },
+    "F": {
+      "item": "minecraft:cake"
+    },
+    "G": {
+      "item": "minecraft:melon_slice"
+    },
+    "H": {
+      "item": "minecraft:pumpkin_pie"
+    },
+    "I": {
+      "item": "minecraft:cooked_mutton"
+    }
+  },
+  "pattern": [
+    "ABC",
+    "DEF",
+    "GHI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "milkevsessentials:gluttony_charm"
+  }
+}

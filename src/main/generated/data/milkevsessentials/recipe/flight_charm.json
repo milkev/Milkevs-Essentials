@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:dragon_breath"
+    },
+    "E": {
+      "item": "minecraft:elytra"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "S": {
+      "item": "minecraft:shulker_shell"
+    },
+    "T": {
+      "item": "minecraft:gray_terracotta"
+    }
+  },
+  "pattern": [
+    "BTB",
+    "SNS",
+    "ETE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "milkevsessentials:flight_charm"
+  }
+}

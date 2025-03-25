@@ -1,7 +1,7 @@
 package net.milkev.milkevsessentials.common.mixins;
 
-import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;
+import io.wispforest.accessories.api.AccessoriesCapability;
+import io.wispforest.accessories.api.Accessory;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil;
 import net.milkev.milkevsessentials.common.MilkevsEssentials;
@@ -26,6 +26,8 @@ public abstract class AlchemicalStasisSootherCancelAddRemoveMixin {
 
     @Shadow public abstract Collection<StatusEffectInstance> getStatusEffects();
 
+    @Shadow public abstract boolean clearStatusEffects();
+
     @Unique
     ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
@@ -33,13 +35,17 @@ public abstract class AlchemicalStasisSootherCancelAddRemoveMixin {
     private void cancelAdd(StatusEffectInstance statusEffectInstance, Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if(config.alchemicalStasisSootherPreventEffectAdd) {
             if (!TagUtil.isIn(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER_BLACKLIST, statusEffectInstance.getEffectType().comp_349())) {
-                TrinketComponent trinket = TrinketsApi.getTrinketComponent((LivingEntity) (Object) this).get();
-                if (trinket.isEquipped(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER)) {
-                    if (!statusEffectInstance.isInfinite()) {
-                        //System.out.println("cancelled effect addition!");
-                        cir.setReturnValue(false);
+                try {
+                    LivingEntity livingEntity = (LivingEntity)(Object)this;
+                    
+                    AccessoriesCapability accessoriesCapability = AccessoriesCapability.get(livingEntity);
+                    if (accessoriesCapability.isEquipped(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER)) {
+                        if (!statusEffectInstance.isInfinite()) {
+                            //System.out.println("cancelled effect addition!");
+                            cir.setReturnValue(false);
+                        }
                     }
-                }
+                } catch(Exception e) {}
             }
         }
     }
@@ -48,25 +54,29 @@ public abstract class AlchemicalStasisSootherCancelAddRemoveMixin {
     private void cancelClear(CallbackInfoReturnable<Boolean> cir) {
         if(config.alchemicalStasisSootherPreventEffectRemove) {
             
-            LivingEntity livingEntity = (LivingEntity)(Object)this;
-            
-            TrinketComponent trinket = TrinketsApi.getTrinketComponent(livingEntity).get();
-            
-            if (trinket.isEquipped(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER)) {
-                //System.out.println("cancelled effect clear!");
-                
-                boolean removed = false;
-                
-                //when the clear command is called / milk is drank check if any active potion effects are blacklisted, and if they are, remove them.
-                //no, intellij, i will not use your enhanced for because it crashes the game.
-                for (Iterator<StatusEffectInstance> iter = livingEntity.getStatusEffects().iterator(); iter.hasNext();) {
-                    StatusEffectInstance statusEffectInstance = iter.next();
-                    if (TagUtil.isIn(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER_BLACKLIST, statusEffectInstance.getEffectType().comp_349())) {
-                        livingEntity.removeStatusEffect(statusEffectInstance.getEffectType());
-                        removed = true;
+            try {
+                LivingEntity livingEntity = (LivingEntity) (Object) this;
+
+                AccessoriesCapability accessoriesCapability = AccessoriesCapability.get(livingEntity);
+
+                if (accessoriesCapability.isEquipped(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER)) {
+                    //System.out.println("cancelled effect clear!");
+
+                    boolean removed = false;
+
+                    //when the clear command is called / milk is drank check if any active potion effects are blacklisted, and if they are, remove them.
+                    //no, intellij, i will not use your enhanced for because it crashes the game.
+                    for (Iterator<StatusEffectInstance> iter = livingEntity.getStatusEffects().iterator(); iter.hasNext(); ) {
+                        StatusEffectInstance statusEffectInstance = iter.next();
+                        if (TagUtil.isIn(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER_BLACKLIST, statusEffectInstance.getEffectType().comp_349())) {
+                            livingEntity.removeStatusEffect(statusEffectInstance.getEffectType());
+                            removed = true;
+                        }
                     }
+                    cir.setReturnValue(removed);
                 }
-                cir.setReturnValue(removed);
+            } catch(Exception e) {
+                //this is here incase accessoriesCapability produces null, which is intended by accessories, and just means that the entity we are working on cant have accessories equipped
             }
         }
     }
@@ -75,10 +85,16 @@ public abstract class AlchemicalStasisSootherCancelAddRemoveMixin {
     private void cancelRemove(RegistryEntry<StatusEffect> registryEntry, CallbackInfoReturnable<Boolean> cir) {
         if(config.alchemicalStasisSootherPreventEffectRemove) {
             if (!TagUtil.isIn(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER_BLACKLIST, registryEntry.comp_349())) {
-                TrinketComponent trinket = TrinketsApi.getTrinketComponent((LivingEntity) (Object) this).get();
-                if (trinket.isEquipped(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER)) {
-                    //System.out.println("cancelled effect removal!");
-                    cir.setReturnValue(false);
+                try{
+                    LivingEntity livingEntity = (LivingEntity) (Object) this;
+
+                    AccessoriesCapability accessoriesCapability = AccessoriesCapability.get(livingEntity);
+                    if (accessoriesCapability.isEquipped(MilkevsEssentials.ALCHEMICAL_STASIS_SOOTHER)) {
+                        //System.out.println("cancelled effect removal!");
+                        cir.setReturnValue(false);
+                    }
+                }  catch(Exception e) {
+                    //this is here incase accessoriesCapability produces null, which is intended by accessories, and just means that the entity we are working on cant have accessories equipped
                 }
             }
         }

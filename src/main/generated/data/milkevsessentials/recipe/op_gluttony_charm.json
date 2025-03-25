@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:glow_berries"
+    },
+    "B": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "C": {
+      "item": "minecraft:turtle_egg"
+    },
+    "D": {
+      "item": "minecraft:honey_bottle"
+    },
+    "E": {
+      "item": "milkevsessentials:gluttony_charm"
+    },
+    "F": {
+      "item": "minecraft:dragon_egg"
+    },
+    "G": {
+      "item": "minecraft:sniffer_egg"
+    },
+    "H": {
+      "item": "minecraft:nether_star"
+    },
+    "I": {
+      "item": "minecraft:rabbit_stew"
+    }
+  },
+  "pattern": [
+    "ABC",
+    "DEF",
+    "GHI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "milkevsessentials:op_gluttony_charm"
+  }
+}

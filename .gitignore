@@ -6,3 +6,4 @@
 *.psd
 *.kra
 *.kra~
+/src/main/generated/.cache

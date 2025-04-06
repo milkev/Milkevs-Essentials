@@ -53,4 +53,6 @@ public class ModConfig implements ConfigData {
     public boolean alchemicalStasisSootherPreventEffectAdd = true;
     @Comment("If the Alchemical Stasis Soother should prevent effects from being forcibly removed from the player (commands, milk, etc). This does NOT stop effects from being removed by their timers ending. Timers will only be allowed to end if alchemicalStasisSootherRefreshesShortEffects is off and the effect has a duration below the refresh timer. Default: true")
     public boolean alchemicalStasisSootherPreventEffectRemove = true;
+    @Comment("If the Dirt Singularity should be enabled. Default: true")
+    public boolean dirtSingularity = true;
 }

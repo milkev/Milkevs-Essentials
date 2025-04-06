@@ -26,6 +26,10 @@ public class MilkevsEssentialsRecipeGenerator extends FabricRecipeProvider {
                 .criterion(FabricRecipeProvider.hasItem(Items.AIR), FabricRecipeProvider.conditionsFromItem(Items.AIR))
                 .offerTo(recipeExporter));
         
+        MilkevsEssentials.recipesShapeless.iterator().forEachRemaining(e -> e
+                .criterion(FabricRecipeProvider.hasItem(Items.AIR), FabricRecipeProvider.conditionsFromItem(Items.AIR))
+                .offerTo(recipeExporter));
+        
         MilkevsEssentials.recipesSmelt.forEach((e, v) -> 
                 RecipeProvider.offerSmelting(recipeExporter, e, RecipeCategory.MISC, v, 0.45f, 300, "misc"));
     }

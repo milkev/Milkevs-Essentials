@@ -4,16 +4,17 @@ import io.github.ladysnake.pal.AbilitySource;
 import io.github.ladysnake.pal.Pal;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.milkev.milkevsessentials.common.items.tools.InfiniteBlockItem;
 import net.milkev.milkevsessentials.common.items.trinkets.*;
 import net.milkev.milkevsessentials.common.network.ToolBeltNetworking;
+import net.minecraft.block.Blocks;
 import net.minecraft.component.ComponentType;
-import net.minecraft.data.server.recipe.RecipeProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.*;
 import net.minecraft.recipe.book.RecipeCategory;
@@ -22,7 +23,6 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
-import org.lwjgl.opengl.GL;
 
 import java.util.*;
 
@@ -32,6 +32,7 @@ public class MilkevsEssentials implements ModInitializer {
 	public static final String MOD_ID = "milkevsessentials";
 	
 	public static List<ShapedRecipeJsonBuilder> recipesShaped = new ArrayList<>();
+	public static List<ShapelessRecipeJsonBuilder> recipesShapeless = new ArrayList<>();
 	public static Map<List<ItemConvertible>, ItemConvertible> recipesSmelt = new HashMap<>();
 
 	public static FlightCharm FLIGHT_CHARM = null;
@@ -55,6 +56,8 @@ public class MilkevsEssentials implements ModInitializer {
 	public static CharmWithTooltip OP_GLUTTONY_CHARM = null;
 	
 	public static CharmWithTooltip ALCHEMICAL_STASIS_SOOTHER = null;
+	
+	public static InfiniteBlockItem DIRT_SINGULARITY = null;
 	
 	public static final TagKey<StatusEffect> ALCHEMICAL_STASIS_SOOTHER_BLACKLIST = TagKey.of(RegistryKeys.STATUS_EFFECT, Identifier.of(MOD_ID, "alchemical_stasis_soother_blacklist"));
 
@@ -241,6 +244,22 @@ public class MilkevsEssentials implements ModInitializer {
 			ALCHEMICAL_STASIS_SOOTHER = new CharmWithTooltip(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), "alchemical_stasis_soother_charm.tooltip");
 			register( "alchemical_stasis_soother", ALCHEMICAL_STASIS_SOOTHER, ItemGroups.TOOLS);
 		}
+		
+		if(config.dirtSingularity) {
+			DIRT_SINGULARITY = new InfiniteBlockItem(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), Blocks.DIRT);
+			register("dirt_singularity", DIRT_SINGULARITY, ItemGroups.TOOLS);
+			recipesShapeless.add(ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Items.DIRT, 64)
+					.input(DIRT_SINGULARITY));
+			recipesShaped.add(ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, DIRT_SINGULARITY)
+					.pattern("DDD")
+					.pattern("DSD")
+					.pattern("DDD")
+					.input('D', Items.DIRT)
+					.input('S', Items.NETHER_STAR));
+		} else if(!config.itemDisableSetting) {
+			DIRT_SINGULARITY = new InfiniteBlockItem(new Item.Settings().maxCount(1).rarity(Rarity.EPIC).recipeRemainder(DIRT_SINGULARITY), Blocks.DIRT);
+			register("dirt_singularity", DIRT_SINGULARITY, ItemGroups.TOOLS);
+		}
 
 		System.out.println(MOD_ID + " Initialized");
 	}
@@ -260,9 +279,8 @@ public class MilkevsEssentials implements ModInitializer {
 	}
 
 	public void AddToGroup(RegistryKey<ItemGroup> group, ItemConvertible item) {
-		ItemGroupEvents.modifyEntriesEvent(group).register(content -> {
-			content.add(item);
-		});
+		ItemGroupEvents.modifyEntriesEvent(group).register(content -> 
+			content.add(item));
 	}
 	
 	public void register(String id, Item object, RegistryKey<ItemGroup> group) {

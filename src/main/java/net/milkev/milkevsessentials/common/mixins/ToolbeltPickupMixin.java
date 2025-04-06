@@ -85,22 +85,4 @@ public abstract class ToolbeltPickupMixin {
         }
     }
 
-    /*
-    public void triggerItemPickedUpByEntityCriteria(ItemEntity itemEntity) {
-        System.out.println("Hah");
-    }*/
-
-    /*
-    public void sendPickup(Entity entity, int i) {
-        System.out.println("Hah");
-    }*/
-
-    /*
-    @Inject(at = @At("HEAD"), method = "triggerItemPickedUpByEntityCriteria", cancellable = true)
-    public void triggerItemPickedUpByEntityCriteria(ItemEntity itemEntity, CallbackInfo ci) {
-        itemEntity.getStack().setCount(2);
-        System.out.println("HI YOU PICKED UP: " + itemEntity.getStack().getItem().getName());
-        ci();
-    }*/
-
 }

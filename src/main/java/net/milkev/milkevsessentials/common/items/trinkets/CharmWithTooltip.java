@@ -24,7 +24,6 @@ public class CharmWithTooltip extends AccessoryItem {
 
     @Override
     public void getExtraTooltip(ItemStack stack, List<Text> tooltip, Item.TooltipContext tooltipContext, TooltipType tooltipType) {
-
         String multilineTooltip = itemTooltip.getString();
         if(multilineTooltip.contains("\n")) {
             String[] multilineTooltipArray = multilineTooltip.split("\n");

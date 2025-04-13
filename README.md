@@ -4,43 +4,50 @@
 
 [Check us out on Curseforge!](https://www.curseforge.com/minecraft/mc-mods/milkevs-essentials)
 
-### Essentially abandoned. I'll try to keep it updated to the latest version of minecraft, but dont expect any content updates for quite a while. Just got a lot of other things id rather do, yah know?
+# <center>Behold, my stuff
 
+### Milkevs Essentials and (neo)Forge!
+Playing on Forge but want to use Milkev's Essentials? Look no further than [Sinytra](https://www.curseforge.com/minecraft/mc-mods/sinytra-connector)! Milkevs Essentials has full compatability with Sinytra for playing on Forge & Neoforge.
 
-Behold, my stuff.
+### Future plans
+In the future this should come to have a fair bit more content! I've got lots of plans, though I don't know how to program most of them, so it will be a lot of learning for me.
 
-
-Various blocks, items, tools and mechanics that Milkev would consider essential to any* playthrough of minecraft.
-
-~~In the future this should come to have a fair bit more content! I've got lots of plans, though I don't know how to program most of them, so it will be a lot of learning for me.~~
-
-All (future and present) blocks, items, tools and mechanics have configs to individually enable / disable them, as well as change their values
+### Config Galore!
+All (future and present) blocks, items, tools and mechanics have configs to individually enable / disable them, as well as change their values. Recipes are easily changable with datapacks! The default recipes are balanced around vanilla progression, with things like the Flight Charm requiring nether stars and elytra!
 
 <details>
 <summary>Items</summary>
 <details> 
-  <summary>Extendo Grips</summary>
+  <summary>Extendo Grips (extend block/attack reach!)</summary>
    3 tiers of trinkets-equippable items that increase the players attack reach and block reach
 </details>
 <details> 
-  <summary>Flight Charm</summary>
+  <summary>Flight Charm (creative flight!)</summary>
 A super original item that enables creative-like flight while equipped 
 </details>
 <details> 
-  <summary>Tool Belt</summary>
+  <summary>Tool Belt (an extra toolbar!)</summary>
 A belt that allows you to swap out your hotbar with a second hotbar when using its keybind
 </details>
 <details> 
-  <summary>Donut</summary>
+  <summary>Donut (eat even when you are full!)</summary>
 An equippable donut that allows the player to eat even when at max hunger.
 </details>
 <details> 
-  <summary>Jelly Filled Donut</summary>
+  <summary>Jelly Filled Donut (never go hungry again!)</summary>
 In addition to the effects of the regular Donut, the Jelly Filled Donut continuously fills your hunger and saturation.
 </details>
 <details>
-  <summary>Condensed Rotten Flesh</summary>
+  <summary>Condensed Rotten Flesh (rotten flesh to leather! again?)</summary>
 Crafted with 5 rotten flesh, you can smelt or smoke this to get leather
+</details>
+<details>
+  <summary>Alchemical Stasis Soother (not just for babies!)</summary>
+This ultra endgame item freezes your status effects in time... nothing in, nothing out
+</details>
+<details>
+  <summary>Dirt Singularity (the power of the infinite!)</summary>
+An endgame item, allowing you to place infinite dirt!
 </details>
 </details>
 
@@ -57,16 +64,21 @@ Holding up a shield nullifies fall damage
 </details>
 
 <details> 
-<summary>Datapack Style Changes</summary>
+<summary>New Recipes & Fixed Blocks Drops</summary>
 <details>
-<summary>Milkevs Custom Rules</summary>
-From a private datapack I made a while ago. This makes the following changes;<br>
-  -Cobwebs are craftable from string and vice versa just like other material blocks<br>
-  -Ancient debris is effected by fortune (drops scrap, use silk touch if you want the debris itself)<br>
-  -Wheat is properly effected by fortune (in vanilla only the seeds are)
+<summary>Cobwebs <-> String</summary>
+Cobwebs are craftable from string and vice versa just like other material blocks
+</details>
+<details>
+<summary>Fortunable Ancient Debris</summary>
+Ancient debris is effected by fortune, dropping multiple scrap! Use silk touch if you want the debris itself.
+</details>
+<details>
+<summary>Wheat Fortune Fix</summary>
+Wheat is also effected by fortune, not just the seeds (in vanilla only the seeds are)
 </details>
 </details>
+
+[![Milkev Gaming Ko-fi Support Page](https://cdn.modrinth.com/data/cached_images/b7b86091251537403a7244affd5494198a163450.jpeg)](https://ko-fi.com/milkevgaming)
 
  
-
-Fabric only, if anyone wants to port it to forge hmu or make a pull request but I'm not doing it myself.

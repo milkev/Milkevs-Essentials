@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "E": {
+      "item": "milkevsessentials:extendo_grip_low"
+    },
+    "N": {
+      "item": "minecraft:netherite_scrap"
+    }
+  },
+  "pattern": [
+    "N N",
+    "NEN",
+    " B "
+  ],
+  "result": {
+    "count": 1,
+    "id": "milkevsessentials:extendo_grip_normal"
+  }
+}

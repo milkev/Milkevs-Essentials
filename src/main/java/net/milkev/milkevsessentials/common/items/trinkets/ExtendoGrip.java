@@ -1,15 +1,13 @@
 package net.milkev.milkevsessentials.common.items.trinkets;
 
-import com.google.common.collect.Multimap;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
-import dev.emi.trinkets.api.*;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
+import io.wispforest.accessories.api.AccessoryItem;
+import io.wispforest.accessories.api.components.AccessoryItemAttributeModifiers;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.item.ItemStack;
-import java.util.UUID;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 
-public class ExtendoGrip extends TrinketItem {
+public class ExtendoGrip extends AccessoryItem {
     private int reach;
     private int attack_reach;
 
@@ -19,20 +17,21 @@ public class ExtendoGrip extends TrinketItem {
         attack_reach = attack_reach_set;
     }
 
-    public Multimap<EntityAttribute, EntityAttributeModifier>
-            getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid) {
-
-        var modifiers = super.getModifiers(stack, slot, entity, uuid);
-
-        //+x block reach
-        modifiers.put(ReachEntityAttributes.REACH,
-                new EntityAttributeModifier(uuid, "milkevsessentials:reach", reach,
-                        EntityAttributeModifier.Operation.ADDITION));
-        //+x attack reach
-        modifiers.put(ReachEntityAttributes.ATTACK_RANGE,
-                new EntityAttributeModifier(uuid, "milkevsessentials:attack_reach", attack_reach,
-                        EntityAttributeModifier.Operation.ADDITION));
-
-        return modifiers;
+    public void getStaticModifiers(Item item, AccessoryItemAttributeModifiers.Builder builder) {
+        
+        builder.addForAny(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE, 
+                new EntityAttributeModifier(
+                Identifier.of("milkevsessentials:reach"),
+                reach,
+                EntityAttributeModifier.Operation.ADD_VALUE), 
+                false);
+        
+        builder.addForAny(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, 
+                new EntityAttributeModifier(
+                Identifier.of("milkevsessentials:attack_reach"),
+                attack_reach,
+                EntityAttributeModifier.Operation.ADD_VALUE),
+                false);
+        
     }
 }

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "G": {
+      "item": "milkevsessentials:extendo_grip_normal"
+    },
+    "I": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "R": {
+      "item": "minecraft:end_rod"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "pattern": [
+    "PSP",
+    "DGD",
+    "RIR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "milkevsessentials:extendo_grip_high"
+  }
+}

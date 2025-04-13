@@ -1,12 +1,11 @@
 package net.milkev.milkevsessentials.common.network;
 
-import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;
+import io.wispforest.accessories.api.AccessoriesCapability;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.milkev.milkevsessentials.common.MilkevsEssentials;
 import net.milkev.milkevsessentials.common.items.trinkets.ToolBelt;
-import net.milkev.milkevsessentials.common.items.trinkets.ToolBeltInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
@@ -18,44 +17,38 @@ import java.util.Optional;
 
 public class ToolBeltNetworking {
 
-    public static Identifier USE_TOOLBELT = new Identifier(MilkevsEssentials.MOD_ID, "use_toolbelt");
+    public static Identifier USE_TOOLBELT = Identifier.of(MilkevsEssentials.MOD_ID, "use_toolbelt");
 
     public static void init() {
         //System.out.println("Milkevs Essentials: Tool Belt Networking Initialized");
-        ServerPlayNetworking.registerGlobalReceiver(USE_TOOLBELT, ToolBeltNetworking::recieveUseToolBeltPacket);
+        PayloadTypeRegistry.playC2S().register(ToolBeltPacket.PACKET_ID, ToolBeltPacket.PACKET_CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(ToolBeltPacket.PACKET_ID, ((payload, context) -> {
+            recieveUseToolBeltPacket(context.player());
+        }));
     }
 
-    private static void recieveUseToolBeltPacket(MinecraftServer minecraftServer, ServerPlayerEntity serverPlayerEntity, ServerPlayNetworkHandler serverPlayNetworkHandler, PacketByteBuf packetByteBuf, PacketSender packetSender) {
+    private static void recieveUseToolBeltPacket(ServerPlayerEntity serverPlayerEntity) {
 
         //System.out.println("recieve use tool belt packet called!");
-        Optional<TrinketComponent> trinketComponent = TrinketsApi.getTrinketComponent(serverPlayerEntity);
-        if(MilkevsEssentials.TOOL_BELT != null) {
-            if (trinketComponent.get().isEquipped(MilkevsEssentials.TOOL_BELT)) {
-                //System.out.println("toolbelt is equipped!");
+        
+        try {
+            AccessoriesCapability accessoriesCapability = AccessoriesCapability.get(serverPlayerEntity);
+            if (MilkevsEssentials.TOOL_BELT != null) {
+                if (accessoriesCapability.isEquipped(MilkevsEssentials.TOOL_BELT)) {
+                    //System.out.println("toolbelt is equipped!");
 
-                ItemStack toolBelt = getToolBeltItemStack(trinketComponent);
+                    ItemStack toolBelt = accessoriesCapability.getFirstEquipped(MilkevsEssentials.TOOL_BELT).stack();
 
-                ToolBeltInventory toolBeltInventory = ToolBelt.load(toolBelt);
+                    ToolBelt.swap(toolBelt, serverPlayerEntity);
 
-                toolBeltInventory.swapItems(serverPlayerEntity, toolBelt);
-
-                ToolBelt.save(toolBeltInventory, toolBelt);
-
-            } else {
-                //System.out.println("toolbelt is not equipped!");
+                } else {
+                    //System.out.println("toolbelt is not equipped!");
+                }
             }
+        } catch(Exception e) {
+            //this is here incase accessoriesCapability produces null, which is intended by accessories, and just means that the entity we are working on cant have accessories equipped
         }
 
-    }
-
-    private static ItemStack getToolBeltItemStack(Optional<TrinketComponent> trinketComponent) {
-        for(int i = 0; i <trinketComponent.get().getAllEquipped().size(); i++) {
-            if(trinketComponent.get().getAllEquipped().get(i).getRight().isOf(MilkevsEssentials.TOOL_BELT)) {
-                return trinketComponent.get().getAllEquipped().get(i).getRight();
-            }
-        }
-        //technically unreachable in use case, but :shrug:
-        return ItemStack.EMPTY;
     }
 
 }

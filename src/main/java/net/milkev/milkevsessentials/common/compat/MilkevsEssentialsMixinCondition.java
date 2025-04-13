@@ -36,9 +36,10 @@ public class MilkevsEssentialsMixinCondition implements IMixinConfigPlugin {
             case id + "FlightCharmMixin" -> config.enableFlightCharm;
             case id + "GluttonyCharmMixin" -> config.gluttonyCharm || config.opGluttonyCharm;
             case id + "OPGluttonyCharmMixin" -> config.opGluttonyCharm;
-            case id + "OPGluttonyCharmMixinMealAPI" -> FabricLoader.getInstance().isModLoaded("mealapi") && config.opGluttonyCharm;
             case id + "ShieldMixin" -> config.enableInstantShieldBlocking || config.enableShieldBlocksFallDamage;
             case id + "ToolbeltPickupMixin" -> config.enableToolBeltPickup && config.enableToolBelt;
+            case id + "AlchemicalStatisSootherCancelAddRemoveMixin",
+                 id + "AlchemicalStatisSootherUnDecrementEffectMixin" -> config.alchemicalStasisSoother;
             default ->
                     true;
         };

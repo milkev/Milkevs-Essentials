@@ -15,12 +15,18 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
 public class AmethystLauncher extends RangedWeaponItem {
 
 
+    public AmethystLauncher(Settings settings) {
+        super(settings);
+    }
+
+    /***
     //private final Tag<Item> amethystShardTag = MilkevTagRegistry.AMETHYST_SHARD;
     //private final Tag<Item> amethystShardTag = null;
 
@@ -36,9 +42,6 @@ public class AmethystLauncher extends RangedWeaponItem {
     }
 
 
-    public AmethystLauncher(Settings settings) {
-        super(settings);
-    }
 
 
     @Override
@@ -122,7 +125,7 @@ public class AmethystLauncher extends RangedWeaponItem {
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
 
     }
-*/
+*
     public int getMaxUseTime(ItemStack stack) {
         return 72000;
     }
@@ -152,9 +155,10 @@ public class AmethystLauncher extends RangedWeaponItem {
                 i = i + 1;
             }
         }
-         */
+         /
         return ItemStack.EMPTY;
     }
+    ***/
 
     @Override
     public Predicate<ItemStack> getProjectiles() {
@@ -163,5 +167,10 @@ public class AmethystLauncher extends RangedWeaponItem {
     @Override
     public int getRange() {
         return 0;
+    }
+
+    @Override
+    protected void shoot(LivingEntity livingEntity, ProjectileEntity projectileEntity, int i, float f, float g, float h, @Nullable LivingEntity livingEntity2) {
+
     }
 }

@@ -8,8 +8,9 @@
     "ShieldMixin",
     "GluttonyCharmMixin",
     "OPGluttonyCharmMixin",
-    "OPGluttonyCharmMixinMealAPI",
-    "ToolbeltPickupMixin"
+    "ToolbeltPickupMixin",
+    "AlchemicalStasisSootherUnDecrementEffectMixin",
+    "AlchemicalStasisSootherCancelAddRemoveMixin"
   ],
   "client": [
   ],

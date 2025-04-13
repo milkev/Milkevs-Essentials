@@ -1,0 +1,6 @@
+{
+  "replace": false,
+  "values": [
+    {"id": "milkevsessentials:alchemical_stasis_soother", "required": false }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "milkevsessentials:dirt_singularity"
+    }
+  ],
+  "result": {
+    "count": 64,
+    "id": "minecraft:dirt"
+  }
+}

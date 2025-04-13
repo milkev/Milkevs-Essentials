@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'fabric-loom' version '1.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -14,11 +14,15 @@ repositories {
 	mavenCentral()
 	//reach entity attributes
 	maven {	url "https://maven.jamieswhiteshirt.com/libs-release"}
-	//trinkets
+	/*//trinkets
 	maven {
 		name = "TerraformersMC"
 		url = "https://maven.terraformersmc.com/"
-	}
+	}*/
+	//accessories
+	maven { url 'https://maven.wispforest.io/releases' }
+	maven { url 'https://maven.su5ed.dev/releases' }
+	maven { url 'https://maven.fabricmc.net' }
 	//cardinal components
 	maven {
 		name = 'Ladysnake Mods'
@@ -43,10 +47,10 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	//fabric api
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	//this mod allows extendo grips to increase block reach and range
-	include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}")
 	//trinkets, to equip trinkets
-	modImplementation "dev.emi:trinkets:${project.trinkets_version}"
+	//modImplementation "dev.emi:trinkets:${project.trinkets_version}"
+	//accessories
+	modImplementation("io.wispforest:accessories-fabric:${project.accessories_version}")
 	//cardinal components api bcus trinkets
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}"
@@ -57,8 +61,6 @@ dependencies {
 	//player ability lib
 	modImplementation "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
 	include "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
-	//meal api
-	//modApi "maven.modrinth:mealapi:${project.meal_api_version}"
 }
 
 processResources {
@@ -100,6 +102,9 @@ jar {
 	from "LICENSE"
 }
 
+fabricApi {
+	configureDataGeneration()
+}
 
 // configure the maven publication
 publishing {

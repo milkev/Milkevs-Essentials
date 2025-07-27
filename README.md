@@ -1,12 +1,6 @@
-# Milkevs Essentials
-
-[Check us out on Modrinth!](https://modrinth.com/mod/milkevs-essentials)
-
-[Check us out on Curseforge!](https://www.curseforge.com/minecraft/mc-mods/milkevs-essentials)
-
 # <center>Behold, my stuff
 
-### Milkevs Essentials and (neo)Forge!
+### Milkevs Essentials and Forge!
 Playing on Forge but want to use Milkev's Essentials? Look no further than [Sinytra](https://www.curseforge.com/minecraft/mc-mods/sinytra-connector)! Milkevs Essentials has full compatability with Sinytra for playing on Forge & Neoforge.
 
 ### Future plans
@@ -42,12 +36,8 @@ In addition to the effects of the regular Donut, the Jelly Filled Donut continuo
 Crafted with 5 rotten flesh, you can smelt or smoke this to get leather
 </details>
 <details>
-  <summary>Alchemical Stasis Soother (not just for babies!)</summary>
-This ultra endgame item freezes your status effects in time... nothing in, nothing out
-</details>
-<details>
-  <summary>Dirt Singularity (the power of the infinite!)</summary>
-An endgame item, allowing you to place infinite dirt!
+  <summary>Dirt Singularity (for we all worship what is true - dirt)</summary>
+Imploding dirt with the help of a netherite star has caused the creation of an endless amount of the stuff
 </details>
 </details>
 
@@ -80,5 +70,5 @@ Wheat is also effected by fortune, not just the seeds (in vanilla only the seeds
 </details>
 
 [![Milkev Gaming Ko-fi Support Page](https://cdn.modrinth.com/data/cached_images/b7b86091251537403a7244affd5494198a163450.jpeg)](https://ko-fi.com/milkevgaming)
-
- 
+<img src="https://cdn.modrinth.com/data/cached_images/343a4cdc7be7fa26dfd02e5d47dfbffa99016f2f.png" width="200" height="200" />
+#### Programmed using IntelliJ

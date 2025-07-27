@@ -55,4 +55,6 @@ public class ModConfig implements ConfigData {
     public boolean alchemicalStasisSootherPreventEffectRemove = true;
     @Comment("If the Dirt Singularity should be enabled. Default: true")
     public boolean dirtSingularity = true;
+    @Comment("If Piglins, Zombified Piglins and Wither Skeletons should be blocked from dropping the weapon they spawn with")
+    public boolean blockSpamWeaponDrops = true;
 }

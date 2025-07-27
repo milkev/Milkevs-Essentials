@@ -40,6 +40,9 @@ public class MilkevsEssentialsMixinCondition implements IMixinConfigPlugin {
             case id + "ToolbeltPickupMixin" -> config.enableToolBeltPickup && config.enableToolBelt;
             case id + "AlchemicalStatisSootherCancelAddRemoveMixin",
                  id + "AlchemicalStatisSootherUnDecrementEffectMixin" -> config.alchemicalStasisSoother;
+            case id + "ZombifiedPiglinRemoveSwordDropMixin",
+                 id + "WitherSkeletonRemoveSwordDropMixin",
+                 id + "PiglinRemoveSwordDropMixin" -> config.blockSpamWeaponDrops;
             default ->
                     true;
         };

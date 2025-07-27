@@ -10,7 +10,10 @@
     "OPGluttonyCharmMixin",
     "ToolbeltPickupMixin",
     "AlchemicalStasisSootherUnDecrementEffectMixin",
-    "AlchemicalStasisSootherCancelAddRemoveMixin"
+    "AlchemicalStasisSootherCancelAddRemoveMixin",
+    "ZombifiedPiglinRemoveSwordDropMixin",
+    "WitherSkeletonRemoveSwordDropMixin",
+    "PiglinRemoveSwordDropMixin"
   ],
   "client": [
   ],

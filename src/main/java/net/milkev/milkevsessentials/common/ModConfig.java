@@ -57,4 +57,6 @@ public class ModConfig implements ConfigData {
     public boolean dirtSingularity = true;
     @Comment("If Piglins, Zombified Piglins and Wither Skeletons should be blocked from dropping the weapon they spawn with")
     public boolean blockSpamWeaponDrops = true;
+    @Comment("If Painting Stability should be enabled. This makes it so only full blocks placed on a painting will break it. Makes it so you can place torches/trapdoors/etc in the same spot as a painting. Default: true")
+    public boolean paintingStability = true;
 }

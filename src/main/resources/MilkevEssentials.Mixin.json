@@ -13,7 +13,8 @@
     "AlchemicalStasisSootherCancelAddRemoveMixin",
     "ZombifiedPiglinRemoveSwordDropMixin",
     "WitherSkeletonRemoveSwordDropMixin",
-    "PiglinRemoveSwordDropMixin"
+    "PiglinRemoveSwordDropMixin",
+    "PaintingStabilityMixin"
   ],
   "client": [
   ],

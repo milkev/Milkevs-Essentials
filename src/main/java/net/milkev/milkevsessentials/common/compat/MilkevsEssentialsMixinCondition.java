@@ -43,6 +43,7 @@ public class MilkevsEssentialsMixinCondition implements IMixinConfigPlugin {
             case id + "ZombifiedPiglinRemoveSwordDropMixin",
                  id + "WitherSkeletonRemoveSwordDropMixin",
                  id + "PiglinRemoveSwordDropMixin" -> config.blockSpamWeaponDrops;
+            case id + "PaintingStabilityMixin" -> config.paintingStability;
             default ->
                     true;
         };

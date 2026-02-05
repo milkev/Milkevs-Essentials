@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "minecraft:saturation"
+    "minecraft:saturation",
+	"minecraft:bad_omen",
+	"minecraft:trial_omen",
+	"minecraft:absorption"
   ]
 }

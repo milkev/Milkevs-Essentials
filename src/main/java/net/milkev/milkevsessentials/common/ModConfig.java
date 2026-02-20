@@ -53,6 +53,8 @@ public class ModConfig implements ConfigData {
     public boolean alchemicalStasisSootherPreventEffectAdd = true;
     @Comment("If the Alchemical Stasis Soother should prevent effects from being forcibly removed from the player (commands, milk, etc). This does NOT stop effects from being removed by their timers ending. Timers will only be allowed to end if alchemicalStasisSootherRefreshesShortEffects is off and the effect has a duration below the refresh timer. Default: true")
     public boolean alchemicalStasisSootherPreventEffectRemove = true;
+    @Comment("If the Alchemical Stasis Soother should hide particle effects and the HUD elements of affected effects. Does not change display in inventory. Effect visuals are not restored upon unequipping the stasis soother (make an issue if this really matters to you and ill fix this, its just extra effort and im lazy lol). Default: true")
+    public boolean alchemicalStasisSootherHideEffectVisuals = true;
     @Comment("If the Dirt Singularity should be enabled. Default: true")
     public boolean dirtSingularity = true;
     @Comment("If Piglins, Zombified Piglins and Wither Skeletons should be blocked from dropping the weapon they spawn with")

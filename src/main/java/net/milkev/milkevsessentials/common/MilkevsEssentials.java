@@ -1,17 +1,26 @@
 package net.milkev.milkevsessentials.common;
 
+import com.mojang.serialization.Codec;
 import io.github.ladysnake.pal.AbilitySource;
 import io.github.ladysnake.pal.Pal;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.milkev.milkevsessentials.common.blocks.RandomTickerBlock;
+import net.milkev.milkevsessentials.common.blocks.RandomTickerBlockEntity;
 import net.milkev.milkevsessentials.common.items.tools.InfiniteBlockItem;
 import net.milkev.milkevsessentials.common.items.trinkets.*;
+import net.milkev.milkevsessentials.common.items.trinkets.AlchemicalStasisSoother;
 import net.milkev.milkevsessentials.common.network.ToolBeltNetworking;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.component.ComponentType;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
@@ -55,12 +64,16 @@ public class MilkevsEssentials implements ModInitializer {
 	public static CharmWithTooltip GLUTTONY_CHARM = null;
 	public static CharmWithTooltip OP_GLUTTONY_CHARM = null;
 	
-	public static CharmWithTooltip ALCHEMICAL_STASIS_SOOTHER = null;
 	
 	public static InfiniteBlockItem DIRT_SINGULARITY = null;
 	
+	public static AlchemicalStasisSoother ALCHEMICAL_STASIS_SOOTHER = null;
 	public static final TagKey<StatusEffect> ALCHEMICAL_STASIS_SOOTHER_BLACKLIST = TagKey.of(RegistryKeys.STATUS_EFFECT, Identifier.of(MOD_ID, "alchemical_stasis_soother_blacklist"));
-
+	public static final AttachmentType<Boolean> ALCHEMICAL_STASIS_SOOTHER_ACTIVE = AttachmentRegistry.createPersistent(id("alchemical_stasis_soother_active"), Codec.BOOL);
+	
+	public static RandomTickerBlock RANDOM_TICKER_BLOCK = null;
+	public static BlockEntityType<RandomTickerBlockEntity> RANDOM_TICKER_BLOCK_ENTITY = null;
+	
 	/*
 	this shits so deprecated now. i swear ill make it one day TM
 	public static final AmethystLauncher AMETHYST_LAUNCHER = new AmethystLauncher(new FabricItemSettings().maxCount(1).group(ItemGroup.COMBAT));
@@ -230,7 +243,7 @@ public class MilkevsEssentials implements ModInitializer {
 		}
 		
 		if(config.alchemicalStasisSoother) {
-			ALCHEMICAL_STASIS_SOOTHER = new CharmWithTooltip(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), "alchemical_stasis_soother_charm.tooltip");
+			ALCHEMICAL_STASIS_SOOTHER = new AlchemicalStasisSoother(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), "alchemical_stasis_soother_charm.tooltip");
 			register( "alchemical_stasis_soother", ALCHEMICAL_STASIS_SOOTHER, ItemGroups.TOOLS);
 			recipesShaped.add(ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, ALCHEMICAL_STASIS_SOOTHER)
 					.pattern("BB ")
@@ -241,7 +254,7 @@ public class MilkevsEssentials implements ModInitializer {
 					.input('n', Items.NETHERITE_INGOT)
 					.input('G', Items.GOLD_INGOT));
 		} else if(!config.itemDisableSetting) {
-			ALCHEMICAL_STASIS_SOOTHER = new CharmWithTooltip(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), "alchemical_stasis_soother_charm.tooltip");
+			ALCHEMICAL_STASIS_SOOTHER = new AlchemicalStasisSoother(new Item.Settings().maxCount(1).rarity(Rarity.EPIC), "alchemical_stasis_soother_charm.tooltip");
 			register( "alchemical_stasis_soother", ALCHEMICAL_STASIS_SOOTHER, ItemGroups.TOOLS);
 		}
 		
@@ -261,6 +274,15 @@ public class MilkevsEssentials implements ModInitializer {
 			register("dirt_singularity", DIRT_SINGULARITY, ItemGroups.TOOLS);
 		}
 
+		if(false) {
+			RANDOM_TICKER_BLOCK = new RandomTickerBlock(AbstractBlock.Settings.create().strength(50));
+			RANDOM_TICKER_BLOCK_ENTITY = BlockEntityType.Builder.create(RandomTickerBlockEntity::new, RANDOM_TICKER_BLOCK).build();
+			register("random_ticker_block", RANDOM_TICKER_BLOCK, ItemGroups.FUNCTIONAL, new Item.Settings().rarity(Rarity.RARE));
+			register("random_ticker_block", RANDOM_TICKER_BLOCK_ENTITY);
+		} else if(!config.itemDisableSetting) {
+			
+		}
+		
 		System.out.println(MOD_ID + " Initialized");
 	}
 
@@ -274,7 +296,7 @@ public class MilkevsEssentials implements ModInitializer {
         return new ExtendoGrip(new Item.Settings().maxCount(1).rarity(rarity), reach, attack_reach);
 	}
 	
-	public Identifier id(String id) {
+	public static Identifier id(String id) {
 		return Identifier.of(MOD_ID, id);
 	}
 
@@ -287,6 +309,16 @@ public class MilkevsEssentials implements ModInitializer {
 		Registry.register(Registries.ITEM, id(id), object);
 		AddToGroup(group, object);
 	}
+	
+	public void register(String id, Block block, RegistryKey<ItemGroup> group, Item.Settings settings) {
+		Registry.register(Registries.BLOCK, id(id), block);
+		register(id, new BlockItem(block, settings), group);
+	}
+	
+	public void register(String id, BlockEntityType<?> blockEntityType) {
+		Registry.register(Registries.BLOCK_ENTITY_TYPE, id(id), blockEntityType);
+	}
 
 
+	
 }

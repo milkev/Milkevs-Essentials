@@ -61,4 +61,6 @@ public class ModConfig implements ConfigData {
     public boolean blockSpamWeaponDrops = true;
     @Comment("If Painting Stability should be enabled. This makes it so only full blocks placed on a painting will break it. Makes it so you can place torches/trapdoors/etc in the same spot as a painting. Default: true")
     public boolean paintingStability = true;
+    @Comment("If Bee's should be protected cus they aint too smart. Removes water damage, teleports bee's back to their hive (if there is room in hive) if they get stuck in the same spot for 30 seconds or if they have been outside of the hive for over 10 minutes. Default: False")
+    public boolean beeProtection = false;
 }

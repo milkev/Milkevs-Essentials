@@ -14,7 +14,8 @@
     "ZombifiedPiglinRemoveSwordDropMixin",
     "WitherSkeletonRemoveSwordDropMixin",
     "PiglinRemoveSwordDropMixin",
-    "PaintingStabilityMixin"
+    "PaintingStabilityMixin",
+    "BeeMixin"
   ],
   "client": [
   ],

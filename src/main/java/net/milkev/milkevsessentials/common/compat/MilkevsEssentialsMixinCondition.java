@@ -44,6 +44,7 @@ public class MilkevsEssentialsMixinCondition implements IMixinConfigPlugin {
                  id + "WitherSkeletonRemoveSwordDropMixin",
                  id + "PiglinRemoveSwordDropMixin" -> config.blockSpamWeaponDrops;
             case id + "PaintingStabilityMixin" -> config.paintingStability;
+            case id + "BeeMixin" -> config.beeProtection;
             default ->
                     true;
         };
